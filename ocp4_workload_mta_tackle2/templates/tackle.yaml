@@ -4,6 +4,8 @@ kind: Tackle
 metadata:
   name: tackle
   namespace: {{ .Values.namespace }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
 spec:
   feature_auth_required: {{ .Values.tackle.feature_auth_required }}
   hub_bucket_volume_size: {{ .Values.tackle.hub_bucket_volume_size }}

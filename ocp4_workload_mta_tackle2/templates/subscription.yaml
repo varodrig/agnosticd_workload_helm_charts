@@ -4,6 +4,8 @@ kind: Subscription
 metadata:
   name: tackle-operator
   namespace: {{ .Values.namespace}}
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   channel: stable-v2.0
   installPlanApproval: Automatic
