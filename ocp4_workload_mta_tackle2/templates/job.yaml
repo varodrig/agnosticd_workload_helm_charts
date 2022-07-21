@@ -21,17 +21,17 @@ spec:
         job-name: setup-tackle
     spec:
       containers:
-      - image: {{ .Values.seed.repository }}:{{ .Values.seed.tag }}
-        imagePullPolicy: {{ .Values.seed.pullPolicy }}
+      - image: {{ .Values.seedJob.repository }}:{{ .Values.seedJob.tag }}
+        imagePullPolicy: {{ .Values.seedJob.pullPolicy }}
         name: setup-tackle
         resources: {}
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
         env:
         - name: TACKLE2_USER
-          value: "{{ .Values.tackle_user }}"
+          value: "{{ .Values.tackleUser }}"
         - name: TACKLE2_PASSWORD
-          value: "{{ .Values.tackle_password }}"
+          value: "{{ .Values.tacklePassword }}"
       dnsPolicy: ClusterFirst
       restartPolicy: Never
       securityContext: {}
