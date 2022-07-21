@@ -7,8 +7,6 @@ metadata:
     job-name: setup-tackle
   name: setup-tackle
   namespace: {{ .Values.namespace}}
-  annotations:
-    argocd.argoproj.io/sync-wave: "4"
 spec:
   backoffLimit: 6
   completions: 1
