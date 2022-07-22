@@ -3,4 +3,4 @@ name: codeserver
 description: A Helm chart to deploy Code Server to OpenShift
 type: application
 version: 1.0.0
-appVersion: 0.4.5
+appVersion: 4.5.1

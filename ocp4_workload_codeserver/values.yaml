@@ -25,6 +25,7 @@ mainContainer:
   requests:
     cpu: 250m
     memory: 512Mi
+
 initContainer:
   repository: quay.io/gpte-devops-automation/codeserver-init
   tag: latest
@@ -39,8 +40,8 @@ repositorySetup:
     # account: lab-user
     # branch: main
 
-  # List of extensions to install
-  # Filename and download location for the extension are required
-  extensions: []
-  # - filename: auchenberg.vscode-browser-preview-0.7.2.vsix
-  #   url: https://gpte-public.s3.amazonaws.com/vscode-plugins/auchenberg.vscode-browser-preview-0.7.2.vsix
+# List of extensions to install
+# Filename and download location for the extension are required
+extensionList: []
+# - filename: auchenberg.vscode-browser-preview-0.7.2.vsix
+#   url: https://gpte-public.s3.amazonaws.com/vscode-plugins/auchenberg.vscode-browser-preview-0.7.2.vsix

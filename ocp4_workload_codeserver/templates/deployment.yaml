@@ -18,7 +18,7 @@ spec:
       labels:
         app: {{ .Values.name }}
     spec:
-{{- with .Values.initContainer -}}
+{{- with .Values.initContainer }}
       initContainers:
       - name: initialize
         image: {{ .repository }}:{{ .tag }}
@@ -27,26 +27,28 @@ spec:
           requests:
             cpu: {{ .requests.cpu }}
             memory: {{ .requests.memory }}
+{{- end }}
         env:
-{{-   if gt (len .repositorySetup.repositoryList) 0 -}}        
-        - name: CODE_REPOS_LIST
-          value: {{ .repositorySetup.repositoryList | toJson }}
-{{-   end -}}
-{{-   if gt (len .repositorySetup.extensions) 0 -}}        
-        - name: CODE_EXTENSIONS_LIST
-          value: {{ .extensions | toJson }}
-{{-   end -}}
-{{- end -}}
         - name: CODE_WORKSPACE_NAME
           value: {{ .Values.workspaceName }}
         - name: CODE_PASSWORD
           value: {{ .Values.password }}
+{{- if .repositorySetup }}          
+{{-   if .repositorySetup.repositoryList }}
+        - name: CODE_REPOS_LIST
+          value: {{ .repositorySetup.repositoryList | toJson }}
+{{-   end }}
+{{- end }}
+{{- if .extensionList }}
+        - name: CODE_EXTENSIONS_LIST
+          value: {{ .extensionList | toJson }}
+{{- end }}
         volumeMounts:
         - name: {{ .Values.name }}-volume
           mountPath: /home/codeserver
       containers:
       - name: {{ .Values.name }}
-{{- with .Values.mainContainer -}}
+{{- with .Values.mainContainer }}
         image: {{ .repository }}:{{ .tag }}
         imagePullPolicy: {{ .pullPolicy }}
         ports:
@@ -56,7 +58,7 @@ spec:
           requests:
             cpu: {{ .requests.cpu }}
             memory: {{ .requests.memory }}
-{{- end -}}
+{{- end }}
         volumeMounts:
         - name: {{ .Values.name }}-volume
           mountPath: /home/codeserver
