@@ -1,0 +1,63 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.codeServer.name }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ .Values.codeServer.name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.codeServer.name }}
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.codeServer.name }}
+    spec:
+{{- with .Values.codeServer.initContainer }}
+      initContainers:
+      - name: initialize
+        image: {{ .repository }}:{{ .tag }}
+        imagePullPolicy: {{ .pullPolicy }}
+        resources:
+          requests:
+            cpu: {{ .requests.cpu }}
+            memory: {{ .requests.memory }}
+        env:
+        - name: CODE_REPOS_LIST
+          value: {{ .repositorySetup.repositoryList | toJson | quote }}
+        - name: CODE_EXTENSIONS_LIST
+          value: {{ .extensions | toJson }}
+{{- end }}
+        - name: CODE_WORKSPACE_NAME
+          value: {{ .Values.codeServer.workspaceName }}
+        - name: CODE_PASSWORD
+          value: {{ .Values.codeServer.password }}
+        volumeMounts:
+        - name: {{ .Values.codeServer.name }}-volume
+          mountPath: /home/codeserver
+      containers:
+      - name: {{ .Values.codeServer.name }}
+{{- with .Values.codeServer.mainContainer }}
+        image: {{ .repository }}:{{ .tag }}
+        imagePullPolicy: {{ .pullPolicy }}
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        resources:
+          requests:
+            cpu: {{ .requests.cpu }}
+            memory: {{ .requests.memory }}
+{{- end }}
+        volumeMounts:
+        - name: {{ .Values.codeServer.name }}-volume
+          mountPath: /home/codeserver
+      restartPolicy: Always
+      volumes:
+      - name: {{ .Values.codeServer.name }}-volume
+        persistentVolumeClaim:
+          claimName: {{ .Values.codeServer.name }}

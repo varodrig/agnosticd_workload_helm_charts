@@ -1,0 +1,47 @@
+# Which namespace to install and configure Code Server in
+namespace: codeserver
+
+# Which OpenShift user gets permissions for the namespace
+user: kubeadmin
+
+# Which role to grant the user on the namespace
+role: admin
+
+# Settings for the Code Server instance
+codeServer:
+  name: codeserver
+  workspaceName: Workspace
+  # Leave empty for no authentication
+  password:
+  storage:
+    pvcSize: 5Gi
+    storageClass: gp3-csi
+  mainContainer:
+    repository: quay.io/gpte-devops-automation/codeserver
+    tag: latest
+    pullPolicy: IfNotPresent
+    requests:
+      cpu: 250m
+      memory: 512Mi
+  initContainer:
+    repository: quay.io/gpte-devops-automation/codeserver-init
+    tag: latest
+    pullPolicy: IfNotPresent
+    requests:
+      cpu: 250m
+      memory: 512Mi
+    giteaName: gitea
+    giteaNamespace: gitea
+    repositorySetup:
+      repositoryUser:
+      repositoryPassword:
+      repositoryList:
+      - name: repositoryname
+        account: myorg
+        branch: main
+
+    # List of extensions to install
+    # Filename and download location for the extension are required
+    extensions: []
+    # - filename: auchenberg.vscode-browser-preview-0.7.2.vsix
+    #   url: https://gpte-public.s3.amazonaws.com/vscode-plugins/auchenberg.vscode-browser-preview-0.7.2.vsix
