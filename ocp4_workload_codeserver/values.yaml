@@ -17,6 +17,7 @@ storage:
   pvcSize: 5Gi
   # Leave empty for default storage class
   storageClass: ""
+
 mainContainer:
   repository: quay.io/gpte-devops-automation/codeserver
   tag: latest
@@ -31,16 +32,12 @@ initContainer:
   requests:
     cpu: 250m
     memory: 512Mi
-  giteaName: gitea
-  giteaNamespace: gitea
-  repositorySetup:
-    repositoryUser:
-    repositoryPassword:
-    repositoryList: []
-    # - name: repositoryname
-      # Account empty -> use repositoryUser
-      # account: ""
-      # branch: main
+
+repositorySetup:
+  repositoryList: []
+  # - name: repositoryname
+    # account: lab-user
+    # branch: main
 
   # List of extensions to install
   # Filename and download location for the extension are required

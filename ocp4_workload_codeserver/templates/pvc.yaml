@@ -9,9 +9,9 @@ metadata:
 spec:
   accessModes:
   - ReadWriteOnce
-{{- if .Values.storage.storageClass }}  
+{{- if .Values.storage.storageClass -}}  
   storageClassName: {{ .Values.storage.storageClass }}
-{{- end }}
+{{- end -}}
   resources:
     requests:
       storage: {{ .Values.storage.pvcSize }}
