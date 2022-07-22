@@ -2,23 +2,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.codeServer.name }}
+  name: {{ .Values.name }}
   namespace: {{ .Values.namespace }}
   labels:
-    app: {{ .Values.codeServer.name }}
+    app: {{ .Values.name }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: {{ .Values.codeServer.name }}
+      app: {{ .Values.name }}
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        app: {{ .Values.codeServer.name }}
+        app: {{ .Values.name }}
     spec:
-{{- with .Values.codeServer.initContainer }}
+{{- with .Values.initContainer }}
       initContainers:
       - name: initialize
         image: {{ .repository }}:{{ .tag }}
@@ -34,15 +34,15 @@ spec:
           value: {{ .extensions | toJson }}
 {{- end }}
         - name: CODE_WORKSPACE_NAME
-          value: {{ .Values.codeServer.workspaceName }}
+          value: {{ .Values.workspaceName }}
         - name: CODE_PASSWORD
-          value: {{ .Values.codeServer.password }}
+          value: {{ .Values.password }}
         volumeMounts:
-        - name: {{ .Values.codeServer.name }}-volume
+        - name: {{ .Values.name }}-volume
           mountPath: /home/codeserver
       containers:
-      - name: {{ .Values.codeServer.name }}
-{{- with .Values.codeServer.mainContainer }}
+      - name: {{ .Values.name }}
+{{- with .Values.mainContainer }}
         image: {{ .repository }}:{{ .tag }}
         imagePullPolicy: {{ .pullPolicy }}
         ports:
@@ -54,10 +54,10 @@ spec:
             memory: {{ .requests.memory }}
 {{- end }}
         volumeMounts:
-        - name: {{ .Values.codeServer.name }}-volume
+        - name: {{ .Values.name }}-volume
           mountPath: /home/codeserver
       restartPolicy: Always
       volumes:
-      - name: {{ .Values.codeServer.name }}-volume
+      - name: {{ .Values.name }}-volume
         persistentVolumeClaim:
-          claimName: {{ .Values.codeServer.name }}
+          claimName: {{ .Values.name }}
