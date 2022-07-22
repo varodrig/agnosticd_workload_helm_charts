@@ -29,7 +29,7 @@ spec:
             memory: {{ .requests.memory }}
         env:
         - name: CODE_REPOS_LIST
-          value: {{ .repositorySetup.repositoryList | toJson | quote }}
+          value: {{ .repositorySetup.repositoryList | toJson }}
         - name: CODE_EXTENSIONS_LIST
           value: {{ .extensions | toJson }}
 {{- end }}
