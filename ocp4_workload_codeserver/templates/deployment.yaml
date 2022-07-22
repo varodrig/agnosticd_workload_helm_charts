@@ -28,10 +28,14 @@ spec:
             cpu: {{ .requests.cpu }}
             memory: {{ .requests.memory }}
         env:
+{{-   if .repositorySetup.repositoryList }}        
         - name: CODE_REPOS_LIST
           value: {{ .repositorySetup.repositoryList | toJson }}
+{{-   end }}
+{{-   if .repositorySetup.extensions }}        
         - name: CODE_EXTENSIONS_LIST
           value: {{ .extensions | toJson }}
+{{-   end }}
 {{- end }}
         - name: CODE_WORKSPACE_NAME
           value: {{ .Values.workspaceName }}

@@ -36,11 +36,11 @@ initContainer:
   repositorySetup:
     repositoryUser:
     repositoryPassword:
-    repositoryList:
-    - name: repositoryname
+    repositoryList: []
+    # - name: repositoryname
       # Account empty -> use repositoryUser
-      account: ""
-      branch: main
+      # account: ""
+      # branch: main
 
   # List of extensions to install
   # Filename and download location for the extension are required
