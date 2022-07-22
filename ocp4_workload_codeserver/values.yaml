@@ -12,7 +12,8 @@ role: admin
 # Settings for the Code Server instance
 workspaceName: Workspace
 # Leave empty for no authentication
-password:
+password: ""
+
 storage:
   pvcSize: 5Gi
   # Leave empty for default storage class
