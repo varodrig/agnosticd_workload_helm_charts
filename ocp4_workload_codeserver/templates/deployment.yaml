@@ -33,14 +33,10 @@ spec:
           value: {{ .Values.workspaceName | quote }}
         - name: CODE_PASSWORD
           value: {{ .Values.password | quote }}
-{{- if .repositoryList }}
         - name: CODE_REPOS_LIST
-          value: {{ .repositoryList | toJson }}
-{{- end }}
-{{- if .extensionList }}
+          value: {{ default "" .repositoryList | toJson }}
         - name: CODE_EXTENSIONS_LIST
-          value: {{ .extensionList | toJson }}
-{{- end }}
+          value: {{ default "" .extensionList | toJson }}
         volumeMounts:
         - name: {{ .Values.name }}-volume
           mountPath: /home/codeserver
