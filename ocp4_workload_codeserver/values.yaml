@@ -34,11 +34,11 @@ initContainer:
     cpu: 250m
     memory: 512Mi
 
-repositorySetup:
-  repositoryList: []
-  # - name: repositoryname
-    # account: lab-user
-    # branch: main
+# List of repositories to set up in VSCode
+repositoryList: []
+# - name: repositoryname
+#   account: lab-user
+#   branch: main
 
 # List of extensions to install
 # Filename and download location for the extension are required
