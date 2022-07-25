@@ -34,9 +34,9 @@ spec:
         - name: CODE_PASSWORD
           value: {{ .Values.password | quote }}
         - name: CODE_REPOS_LIST
-          value: {{ .repositoryList }}
+          value: {{ .Values.repositoryList }}
         - name: CODE_EXTENSIONS_LIST
-          value: {{ .extensionList }}
+          value: {{ .Values.extensionList }}
         volumeMounts:
         - name: {{ .Values.name }}-volume
           mountPath: /home/codeserver
