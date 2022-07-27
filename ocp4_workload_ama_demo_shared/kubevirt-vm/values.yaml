@@ -1,0 +1,25 @@
+# Which namespace to install and configure Tackle V2 in
+namespace: retail
+
+# Which OpenShift user gets permissions for the namespace 
+user: kubeadmin
+
+# Which role to grant the user on the namespace
+role: admin
+
+vmName: oracle-database
+
+requests:
+  memory: "4Gi"
+  cpu: "2"
+
+storage:
+  pvcSize: 30Gi
+  storageClass: gp3-csi
+
+imageSource:
+  namespace: vmimages
+  name: kubevirt
+
+nodeSelector: {}
+tolerations: []

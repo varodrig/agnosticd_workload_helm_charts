@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.vmName }}
+  namespace: {{ .Values.namespace }}
+spec:
+  ports:
+  - port: 1521
+    protocol: TCP
+    targetPort: 1521
+  selector:
+    kubevirt.io/domain: {{ .Values.vmName }}
+  sessionAffinity: None
+  type: ClusterIP
