@@ -1,3 +1,4 @@
+---
 apiVersion: kubevirt.io/v1
 kind: VirtualMachine
 metadata:
@@ -67,5 +68,5 @@ spec:
             storage: {{ .Values.storage.pvcSize }}
       source:
         pvc:
-          namespace: {{ .Values.imageSource.namespace }}
-          name: {{ .Values.imageSource.name }}
+          namespace: {{ .Values.dataVolumeSource.namespace }}
+          name: {{ .Values.dataVolumeSource.name }}

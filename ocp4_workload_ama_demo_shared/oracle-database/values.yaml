@@ -20,7 +20,7 @@ storage:
   pvcSize: 30Gi
   storageClass: gp3-csi
 
-imageSource:
+dataVolumeSource:
   namespace: vmimages
   name: oracle-database
 
