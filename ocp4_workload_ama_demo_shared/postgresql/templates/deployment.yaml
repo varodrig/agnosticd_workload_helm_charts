@@ -12,9 +12,6 @@ spec:
     matchLabels:
       {{- include "postgresql.selectorLabels" . | nindent 6 }}
   strategy:
-    activeDeadlineSeconds: 21600
-    recreateParams:
-      timeoutSeconds: 600
     type: Recreate
   template:
     metadata:
