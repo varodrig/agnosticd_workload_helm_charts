@@ -24,9 +24,6 @@ dataVolumeSource:
   namespace: vmimages
   name: oracle-database
 
-nodeSelector:
-  "node-role.kubernetes.io/metal": ""
+nodeSelector: {}
 
-tolerations:
-- key: metal
-  operator: Exists
+tolerations: []
