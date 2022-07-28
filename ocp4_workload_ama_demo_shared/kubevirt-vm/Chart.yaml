@@ -1,6 +1,0 @@
-apiVersion: v2
-name: vm-name
-description: A Helm chart to deploy a KubeVirt VM to OpenShift
-type: application
-version: 1.0.0
-appVersion: 1.0.0
