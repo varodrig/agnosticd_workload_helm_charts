@@ -29,4 +29,4 @@ nodeSelector:
 
 tolerations:
 - key: metal
-  operator: Exist
+  operator: Exists
