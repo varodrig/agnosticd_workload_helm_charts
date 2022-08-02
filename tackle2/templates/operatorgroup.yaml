@@ -7,4 +7,4 @@ metadata:
     {{- include "tackle2.labels" . | nindent 4 }}
 spec:
   targetNamespaces:
-  - {{ .Release.namespace }}
+  - {{ .Release.Namespace }}
