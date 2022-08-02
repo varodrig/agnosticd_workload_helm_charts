@@ -1,0 +1,13 @@
+---
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: tackle-operator
+  labels:
+    {{- include "tackle2.labels" . | nindent 4 }}
+spec:
+  channel: stable-v2.0
+  installPlanApproval: Automatic
+  name: tackle-operator
+  source: community-operators
+  sourceNamespace: openshift-marketplace
