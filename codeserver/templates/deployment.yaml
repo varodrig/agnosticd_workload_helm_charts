@@ -81,4 +81,4 @@ spec:
       volumes:
       - name: {{ include "ocp4_workload_codeserver.fullname" . }}
         persistentVolumeClaim:
-        claimName: {{ include "ocp4_workload_codeserver.fullname" . }}
+          claimName: {{ include "ocp4_workload_codeserver.fullname" . }}
