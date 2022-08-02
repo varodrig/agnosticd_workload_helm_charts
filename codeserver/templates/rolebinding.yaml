@@ -4,7 +4,7 @@ kind: RoleBinding
 metadata:
   name: codeserver-{{ .Values.namespacePermissions.user }}
   labels:
-    {{- include "ocp4_workload_codeserver.labels" . | nindent 4 }}
+    {{- include "codeserver.labels" . | nindent 4 }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole

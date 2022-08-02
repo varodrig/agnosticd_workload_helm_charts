@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "ocp4_workload_codeserver.fullname" . }}
+  name: {{ include "codeserver.fullname" . }}
   labels:
-    {{- include "ocp4_workload_codeserver.labels" . | nindent 4 }}
+    {{- include "codeserver.labels" . | nindent 4 }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      {{- include "ocp4_workload_codeserver.selectorLabels" . | nindent 6 }}
+      {{- include "codeserver.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        {{- include "ocp4_workload_codeserver.selectorLabels" . | nindent 8 }}
+        {{- include "codeserver.selectorLabels" . | nindent 8 }}
     spec:
-      serviceAccountName: {{ include "ocp4_workload_codeserver.serviceAccountName" . }}
+      serviceAccountName: {{ include "codeserver.serviceAccountName" . }}
 
 {{- with .Values.initContainer }}
       initContainers:
@@ -36,7 +36,7 @@ spec:
         - name: CODE_EXTENSIONS_LIST
           value: {{ .Values.extensionList | quote }}
         volumeMounts:
-        - name: {{ include "ocp4_workload_codeserver.fullname" . }}
+        - name: {{ include "codeserver.fullname" . }}
           mountPath: /home/codeserver
 
       containers:
@@ -63,7 +63,7 @@ spec:
             path: /
             port: 8080
         volumeMounts:
-        - name: {{ include "ocp4_workload_codeserver.fullname" . }}
+        - name: {{ include "codeserver.fullname" . }}
           mountPath: /home/codeserver
 
       {{- with .Values.nodeSelector }}
@@ -79,6 +79,6 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       volumes:
-      - name: {{ include "ocp4_workload_codeserver.fullname" . }}
+      - name: {{ include "codeserver.fullname" . }}
         persistentVolumeClaim:
-          claimName: {{ include "ocp4_workload_codeserver.fullname" . }}
+          claimName: {{ include "codeserver.fullname" . }}

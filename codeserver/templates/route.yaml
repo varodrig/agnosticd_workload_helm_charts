@@ -2,9 +2,9 @@
 apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
-  name: {{ include "ocp4_workload_codeserver.fullname" . }}
+  name: {{ include "codeserver.fullname" . }}
   labels:
-    {{- include "ocp4_workload_codeserver.labels" . | nindent 4 }}
+    {{- include "codeserver.labels" . | nindent 4 }}
 spec:
   port:
     targetPort: 8080
@@ -13,6 +13,6 @@ spec:
     termination: edge
   to:
     kind: Service
-    name: {{ include "ocp4_workload_codeserver.fullname" . }}
+    name: {{ include "codeserver.fullname" . }}
     weight: 100
   wildcardPolicy: None

@@ -1,7 +1,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "ocp4_workload_codeserver.name" -}}
+{{- define "codeserver.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -10,7 +10,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "ocp4_workload_codeserver.fullname" -}}
+{{- define "codeserver.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -26,16 +26,16 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "ocp4_workload_codeserver.chart" -}}
+{{- define "codeserver.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "ocp4_workload_codeserver.labels" -}}
-helm.sh/chart: {{ include "ocp4_workload_codeserver.chart" . }}
-{{ include "ocp4_workload_codeserver.selectorLabels" . }}
+{{- define "codeserver.labels" -}}
+helm.sh/chart: {{ include "codeserver.chart" . }}
+{{ include "codeserver.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -45,17 +45,17 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "ocp4_workload_codeserver.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "ocp4_workload_codeserver.name" . }}
+{{- define "codeserver.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "codeserver.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "ocp4_workload_codeserver.serviceAccountName" -}}
+{{- define "codeserver.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "ocp4_workload_codeserver.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "codeserver.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
