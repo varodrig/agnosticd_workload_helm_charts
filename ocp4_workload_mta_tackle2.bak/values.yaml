@@ -1,0 +1,31 @@
+# Which namespace to install and configure Tackle V2 in
+namespace: tacklev2
+
+# Which OpenShift user gets permissions for the namespace 
+user: kubeadmin
+
+# Which role to grant the user on the namespace
+role: admin
+
+# Deploy Seed Job
+seedTackle: false
+seedJob:
+  repository: quay.io/gpte-devops-automation/tackle2-setup
+  tag: latest
+  pullPolicy: IfNotPresent
+
+# Authentication for Tackle
+# Leave empty for no authentication (feature_auth_required: false)
+tackleUser: ""
+tacklePassword: ""
+
+# Settings for the Tackle instance
+tackle:
+  featureAuthRequired: false
+  hubBucketVolumeSize: 10Gi
+  hubDatabaseVolumeSize: 5Gi
+  keycloakDatabaseDataVolumeSize: 1Gi
+  mavenDataVolumeSize: 10Gi
+  pathfinderDatabaseDataVolumeSize: 1Gi
+  rwoStorageClass: ocs-storagecluster-ceph-rbd
+  rwxStorageClass: ocs-storagecluster-cephfs  

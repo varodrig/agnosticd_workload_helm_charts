@@ -1,39 +1,14 @@
-# Name of the codeserver application
-name: codeserver
-# Which namespace to install and configure Code Server in
-namespace: codeserver
+# Default values for ocp4_workload_codeserver.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
 
-# Which OpenShift user gets permissions for the namespace
-user: kubeadmin
-
-# Which role to grant the user on the namespace
-role: admin
+nameOverride: ""
+fullnameOverride: ""
 
 # Settings for the Code Server instance
 workspaceName: Workspace
 # Leave empty for no authentication
 password: ""
-
-storage:
-  pvcSize: 5Gi
-  # Leave empty for default storage class
-  storageClass: ""
-
-mainContainer:
-  repository: quay.io/gpte-devops-automation/codeserver
-  tag: latest
-  pullPolicy: IfNotPresent
-  requests:
-    cpu: 250m
-    memory: 512Mi
-
-initContainer:
-  repository: quay.io/gpte-devops-automation/codeserver-init
-  tag: latest
-  pullPolicy: IfNotPresent
-  requests:
-    cpu: 250m
-    memory: 512Mi
 
 # List of repositories to set up in VSCode
 repositoryList: []
@@ -46,3 +21,45 @@ repositoryList: []
 extensionList: []
 # - filename: auchenberg.vscode-browser-preview-0.7.2.vsix
 #   url: https://gpte-public.s3.amazonaws.com/vscode-plugins/auchenberg.vscode-browser-preview-0.7.2.vsix
+
+namespacePermissions:
+  # Which OpenShift user gets permissions for the namespace
+  user: kubeadmin
+  # Which role to grant the user on the namespace
+  role: admin
+
+# Configuration for the main code server container
+mainContainer:
+  repository: quay.io/gpte-devops-automation/codeserver
+  tag: latest
+  pullPolicy: IfNotPresent
+  requests:
+    cpu: 250m
+    memory: 512Mi
+
+# Configuration for the init container
+initContainer:
+  repository: quay.io/gpte-devops-automation/codeserver-init
+  tag: latest
+  pullPolicy: IfNotPresent
+  requests:
+    cpu: 250m
+    memory: 512Mi
+
+storage:
+  pvcSize: 5Gi
+  # Leave empty for default storage class
+  storageClass: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

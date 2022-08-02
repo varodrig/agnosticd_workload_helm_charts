@@ -2,10 +2,9 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ .Values.name }}
-  namespace: {{ .Values.namespace }}
+  name: {{ include "ocp4_workload_codeserver.fullname" . }}
   labels:
-    app: {{ .Values.name }}
+    {{- include "ocp4_workload_codeserver.labels" . | nindent 4 }}
 spec:
   accessModes:
   - ReadWriteOnce
