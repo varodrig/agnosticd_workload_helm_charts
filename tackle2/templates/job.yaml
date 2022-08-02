@@ -12,12 +12,12 @@ spec:
   parallelism: 1
   selector:
     matchLabels:
-      {{- include "tackle2.selectorLabels" . | nindent 6 }}
+      job-name: setup-tackle
   suspend: false
   template:
     metadata:
       labels:
-        {{- include "tackle2.selectorLabels" . | nindent 8 }}
+        job-name: setup-tackle
     spec:
       containers:
       - name: setup-tackle
