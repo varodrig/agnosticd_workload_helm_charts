@@ -1,26 +1,24 @@
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.name }}
-  namespace: {{ .Values.namespace }}
+  name: {{ include "ocp4_workload_codeserver.fullname" . }}
   labels:
-    app: {{ .Values.name }}
+    {{- include "ocp4_workload_codeserver.labels" . | nindent 4 }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: {{ .Values.name }}
-  strategy:
-    type: Recreate
+      {{- include "ocp4_workload_codeserver.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        app: {{ .Values.name }}
+        {{- include "ocp4_workload_codeserver.selectorLabels" . | nindent 8 }}
     spec:
+      serviceAccountName: {{ include "ocp4_workload_codeserver.serviceAccountName" . }}
+
 {{- with .Values.initContainer }}
       initContainers:
-      - name: initialize
+      - name: init
         image: {{ .repository }}:{{ .tag }}
         imagePullPolicy: {{ .pullPolicy }}
         resources:
@@ -38,26 +36,42 @@ spec:
         - name: CODE_EXTENSIONS_LIST
           value: {{ .Values.extensionList | quote }}
         volumeMounts:
-        - name: {{ .Values.name }}-volume
+        - name: {{ include "ocp4_workload_codeserver.fullname" . }}
           mountPath: /home/codeserver
+
       containers:
-      - name: {{ .Values.name }}
+
+      - name: {{ .Chart.Name }}
 {{- with .Values.mainContainer }}
         image: {{ .repository }}:{{ .tag }}
         imagePullPolicy: {{ .pullPolicy }}
-        ports:
-        - containerPort: 8080
-          protocol: TCP
         resources:
           requests:
             cpu: {{ .requests.cpu }}
             memory: {{ .requests.memory }}
 {{- end }}
-        volumeMounts:
-        - name: {{ .Values.name }}-volume
-          mountPath: /home/codeserver
-      restartPolicy: Always
-      volumes:
-      - name: {{ .Values.name }}-volume
-        persistentVolumeClaim:
-          claimName: {{ .Values.name }}
+        ports:
+        - name: codeserver
+          containerPort: 8080
+          protocol: TCP
+        livenessProbe:
+          httpGet:
+            path: /
+            port: http
+        readinessProbe:
+          httpGet:
+            path: /
+            port: http
+
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
