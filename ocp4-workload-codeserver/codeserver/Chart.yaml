@@ -1,5 +1,5 @@
 apiVersion: v2
-name: ocp4_workload_codeserver
+name: codeserver
 description: A Helm chart to deploy Code Server to Kubernetes
 
 # A chart can be either an 'application' or a 'library' chart.
