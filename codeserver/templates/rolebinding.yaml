@@ -2,7 +2,7 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: codeserver-{{ include "ocp4_workload_codeserver.fullname" . }}
+  name: codeserver-{{ .Values.namespacePermissions.user }}
   labels:
     {{- include "ocp4_workload_codeserver.labels" . | nindent 4 }}
 roleRef:
