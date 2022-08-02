@@ -57,11 +57,11 @@ spec:
         livenessProbe:
           httpGet:
             path: /
-            port: http
+            port: 8080
         readinessProbe:
           httpGet:
             path: /
-            port: http
+            port: 8080
         volumeMounts:
         - name: {{ include "ocp4_workload_codeserver.fullname" . }}
           mountPath: /home/codeserver
