@@ -1,6 +1,0 @@
-apiVersion: v2
-name: tackle2
-description: A Helm chart to deploy Tackle V2 to OpenShift
-type: application
-version: 1.0.0
-appVersion: 2.0.0
