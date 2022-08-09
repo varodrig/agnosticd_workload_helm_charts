@@ -37,7 +37,11 @@ spec:
           type: q35
         resources:
           {{- toYaml .Values.resources | nindent 10 }}
+      {{- if eq .Values.storage.storageMode "ReadWriteMany" }}
       evictionStrategy: LiveMigrate
+      {{- else }}
+      evictionStrategy: None
+      {{- end }}
       networks:
       - name: net-0
         pod: {}
@@ -61,7 +65,7 @@ spec:
       pvc:
         storageClassName: {{ .Values.storage.storageClass }}
         accessModes:
-        - ReadWriteOnce
+        - {{ .Values.storage.storageMode }}
         volumeMode: Block
         resources:
           requests:

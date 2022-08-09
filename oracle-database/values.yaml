@@ -19,6 +19,7 @@ resources:
 storage:
   pvcSize: 30Gi
   storageClass: gp3-csi
+  storageMode: ReadWriteOnce
 
 dataVolumeSource:
   namespace: vmimages
