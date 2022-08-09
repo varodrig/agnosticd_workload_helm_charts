@@ -39,8 +39,6 @@ spec:
           {{- toYaml .Values.resources | nindent 10 }}
       {{- if eq .Values.storage.storageMode "ReadWriteMany" }}
       evictionStrategy: LiveMigrate
-      {{- else }}
-      evictionStrategy: None
       {{- end }}
       networks:
       - name: net-0
