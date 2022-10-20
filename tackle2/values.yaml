@@ -19,7 +19,7 @@ operatorChannel: stable-v2.0
 seedTackle: false
 seedJob:
   repository: quay.io/gpte-devops-automation/tackle2-setup
-  tag: 1.0
+  tag: "1.0"
   pullPolicy: IfNotPresent
 
 # Authentication for Tackle
