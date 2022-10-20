@@ -1,4 +1,4 @@
-{{- if .Values.seedTackle }}
+{{- if .Values.seedTackle -}}
 ---
 apiVersion: batch/v1
 kind: Job

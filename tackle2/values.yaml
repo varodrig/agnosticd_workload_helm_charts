@@ -11,15 +11,19 @@ namespacePermissions:
   # Which role to grant the user on the namespace
   role: admin
 
+# Deploy Tackle2 Operator
+deployOperator: true
+operatorChannel: stable-v2.0
+
 # Deploy Seed Job
 seedTackle: false
 seedJob:
   repository: quay.io/gpte-devops-automation/tackle2-setup
-  tag: latest
+  tag: 1.0
   pullPolicy: IfNotPresent
 
 # Authentication for Tackle
-# Leave empty for no authentication (feature_auth_required: false)
+# Leave empty for no authentication (tackleInstance.feature_auth_required: false)
 tackleUser: ""
 tacklePassword: ""
 
