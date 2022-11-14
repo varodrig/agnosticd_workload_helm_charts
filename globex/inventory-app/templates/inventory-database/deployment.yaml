@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: {{ .Values.inventoryDb.name }}
+    app.openshift.io/runtime: postgresql
+    {{- include "inventory-app.labels" . | nindent 4 }}
+  name: {{ .Values.inventoryDb.name }}
+spec:
+  replicas: {{ .Values.inventoryDb.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ .Values.inventoryDb.name }}
+      {{- include "inventory-app.selectorLabels" . | nindent 6 }}
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ .Values.inventoryDb.name }}
+        {{- include "inventory-app.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - image: {{ .Values.inventoryDb.image }}
+          imagePullPolicy: {{ .Values.inventoryDb.imagePullPolicy }}
+          name: {{ .Values.inventoryDb.name }}
+          ports:
+            - name: postgresql
+              containerPort: 5432
+              protocol: TCP
+          resources: {}
+          env:
+            - name: POSTGRESQL_USER
+              valueFrom:
+                secretKeyRef:
+                  key: database-user
+                  name: {{ .Values.inventoryDb.secret.name }}
+            - name: POSTGRESQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: database-password
+                  name: {{ .Values.inventoryDb.secret.name }}
+            - name: POSTGRESQL_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  key: database-name
+                  name: {{ .Values.inventoryDb.secret.name }}
+      serviceAccountName: {{ include "inventory-app.serviceAccountName" . }}
+      serviceAccount: {{ include "inventory-app.serviceAccountName" . }}

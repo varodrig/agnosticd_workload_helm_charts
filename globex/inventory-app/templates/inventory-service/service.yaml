@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/name: {{ .Values.inventoryService.name }}
+    {{- include "inventory-app.labels" . | nindent 4 }}
+  name: {{ .Values.inventoryService.name }}
+spec:
+  ports:
+  - name: {{ .Values.inventoryService.service.portName }}
+    port: {{ .Values.inventoryService.service.port }}
+    protocol: TCP
+    targetPort: {{ .Values.inventoryService.ports.httpPortName }}
+  selector:
+    app.kubernetes.io/name: {{ .Values.inventoryService.name }}
+    {{- include "inventory-app.selectorLabels" . | nindent 4 }}

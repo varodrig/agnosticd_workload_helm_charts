@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app.kubernetes.io/name: {{ .Values.catalogDb.name }}
+    app.openshift.io/runtime: postgresql
+    {{- include "catalog-app.labels" . | nindent 4 }}
+  name: {{ .Values.catalogDb.name }}
+spec:
+  replicas: {{ .Values.catalogDb.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ .Values.catalogDb.name }}
+      {{- include "catalog-app.selectorLabels" . | nindent 6 }}
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app.kubernetes.io/name: {{ .Values.catalogDb.name }}
+        {{- include "catalog-app.selectorLabels" . | nindent 8 }}
+        name: {{ .Values.catalogDb.name }}
+    spec:
+      containers:
+        - image: {{ .Values.catalogDb.image }}
+          imagePullPolicy: {{ .Values.catalogDb.imagePullPolicy }}
+          name: {{ .Values.catalogDb.name }}
+          ports:
+            - name: postgresql
+              containerPort: 5432
+              protocol: TCP
+          resources: {}
+          env:
+            - name: POSTGRESQL_USER
+              valueFrom:
+                secretKeyRef:
+                  key: database-user
+                  name: {{ .Values.catalogDb.secret.name }}
+            - name: POSTGRESQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: database-password
+                  name: {{ .Values.catalogDb.secret.name }}
+            - name: POSTGRESQL_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  key: database-name
+                  name: {{ .Values.catalogDb.secret.name }}
+      serviceAccountName: {{ include "catalog-app.serviceAccountName" . }}
+      serviceAccount: {{ include "catalog-app.serviceAccountName" . }}

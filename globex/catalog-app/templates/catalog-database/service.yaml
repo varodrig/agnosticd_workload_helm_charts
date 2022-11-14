@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/name: {{ .Values.catalogDb.name }}
+    app.kubernetes.io/part-of: {{ include "catalog-app.name" . }}
+  name: {{ .Values.catalogDb.name }}
+spec:
+  ports:
+    - name: postgresql
+      protocol: TCP
+      port: 5432
+      targetPort: 5432
+  selector:
+    app.kubernetes.io/name: {{ .Values.catalogDb.name }}
+    {{- include "catalog-app.selectorLabels" . | nindent 4 }}

@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app.kubernetes.io/name: {{ .Values.catalogService.name }}
+    {{- include "catalog-app.selectorLabels" . | nindent 4 }}
+  name: {{ .Values.catalogService.name }}
+spec:
+  ports:
+  - name: {{ .Values.catalogService.service.portName }}
+    port: {{ .Values.catalogService.service.port }}
+    protocol: TCP
+    targetPort: {{ .Values.catalogService.ports.httpPortName }}
+  selector:
+    app.kubernetes.io/name: {{ .Values.catalogService.name }}
+    {{- include "catalog-app.selectorLabels" . | nindent 4 }}

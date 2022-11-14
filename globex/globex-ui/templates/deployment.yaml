@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  annotations:
+    app.openshift.io/connects-to: |
+      [{"apiVersion":"apps/v1","kind":"Deployment","name":"{{ .Values.catalogService.name }}"},
+      {"apiVersion":"apps/v1","kind":"Deployment","name":"{{ .Values.recommendationEngine.name }}"},
+      {"apiVersion":"apps/v1","kind":"Deployment","name":"{{ .Values.activityTrackingService.name }}"},
+      {"apiVersion":"apps/v1","kind":"Deployment","name":"{{ .Values.orderPlacementService.name }}"}]
+  labels:
+    {{- include "globex-ui.labels" . | nindent 4 }}
+    app.openshift.io/runtime: nodejs
+  name: {{ include "globex-ui.name" . }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "globex-ui.selectorLabels" . | nindent 6 }}
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        {{- include "globex-ui.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - image:  {{ .Values.image }}
+          imagePullPolicy: {{ .Values.imagePullPolicy }}
+          name: {{ .Chart.Name }}
+          ports:
+            - name: {{ .Values.ports.httpPortName }}
+              containerPort: {{ .Values.ports.httpPort }}
+              protocol: TCP
+          resources: {}
+          env:
+            - name: NODE_ENV
+              value: {{ .Values.nodeEnv }}
+            - name: PORT
+              value: '{{ .Values.ports.httpPort }}'
+            - name: API_TRACK_USERACTIVITY
+              value: {{ .Values.activityTrackingService.url }}{{ .Values.activityTrackingService.postActivityPath }}
+            - name: API_GET_PAGINATED_PRODUCTS
+              value: {{ .Values.catalogService.url }}{{ .Values.catalogService.getProductsPath }}
+            - name: API_GET_PRODUCT_DETAILS_BY_IDS
+              value: {{ .Values.catalogService.url }}{{ .Values.catalogService.getProductListPath }}
+            - name: API_CATALOG_RECOMMENDED_PRODUCT_IDS
+              value: {{ .Values.recommendationEngine.url }}{{ .Values.recommendationEngine.getRecommendedProductsPath }}
+            - name: API_TRACK_PLACEORDER
+              value: {{ .Values.orderPlacementService.url }}{{ .Values.orderPlacementService.postOrderPath }}
+      serviceAccountName: {{ include "globex-ui.serviceAccountName" . }}

@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/name: {{ .Values.inventoryDb.name }}
+    {{- include "inventory-app.labels" . | nindent 4 }}
+  name: {{ .Values.inventoryDb.name }}
+spec:
+  ports:
+    - name: postgresql
+      protocol: TCP
+      port: 5432
+      targetPort: 5432
+  selector:
+    app.kubernetes.io/name: {{ .Values.inventoryDb.name }}
+    {{- include "inventory-app.selectorLabels" . | nindent 4 }}

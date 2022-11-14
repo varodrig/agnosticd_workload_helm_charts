@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app.openshift.io/runtime: quarkus
+    app.kubernetes.io/name: {{ .Values.inventoryService.name }}
+    {{- include "inventory-app.labels" . | nindent 4 }}
+  annotations:
+    app.openshift.io/connects-to: |
+      [{"apiVersion":"apps/v1","kind":"Deployment","name":"{{ .Values.inventoryDb.name }}"}]
+  name: {{ .Values.inventoryService.name }}
+spec:
+  replicas: {{ .Values.inventoryService.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ .Values.inventoryService.name }}
+      {{- include "inventory-app.selectorLabels" . | nindent 6 }}
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ .Values.inventoryService.name }}
+        {{- include "inventory-app.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - image: {{ .Values.inventoryService.image }}
+          imagePullPolicy: {{ .Values.inventoryService.imagePullPolicy }}
+          name: {{ .Values.inventoryService.name }}
+          ports:
+            - name: {{ .Values.inventoryService.ports.httpPortName }}
+              containerPort: {{ .Values.inventoryService.ports.httpPort }}
+              protocol: TCP
+          resources: {}
+          env:
+            - name: QUARKUS_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  key: database-user
+                  name: {{ .Values.inventoryDb.secret.name }}
+            - name: QUARKUS_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: database-password
+                  name: {{ .Values.inventoryDb.secret.name }}
+            - name: POSTGRESQL_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  key: database-name
+                  name: {{ .Values.inventoryDb.secret.name }}
+            - name: QUARKUS_DATASOURCE_JDBC_URL
+              value: jdbc:postgresql://{{ .Values.inventoryDb.name }}:5432/${POSTGRESQL_DATABASE}
+      serviceAccountName: {{ include "inventory-app.serviceAccountName" . }}
+      serviceAccount: {{ include "inventory-app.serviceAccountName" . }}

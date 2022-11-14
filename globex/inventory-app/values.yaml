@@ -1,0 +1,38 @@
+inventoryService:
+  name: inventory
+  replicaCount: 1
+  image: quay.io/globex-recommendation/inventory:summit-connect
+  imagePullPolicy: IfNotPresent
+  ports:
+    httpPortName: http
+    httpPort: 8080
+  service:
+    portName: http
+    port: 8080
+  route:
+    enabled: false
+    host:
+    tlsEnabled: true
+    tls:
+      termination: edge
+      insecureEdgeTerminationPolicy: Redirect
+
+inventoryDb:
+  name: inventory-database
+  replicaCount: 1
+  image: quay.io/globex-recommendation/inventory-database:summit-connect
+  imagePullPolicy: IfNotPresent 
+  pgsqlUser: inventory
+  pgsqlPassword: inventory
+  pgsqlDatabase: inventory
+  secret:
+    name: inventory-database
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""

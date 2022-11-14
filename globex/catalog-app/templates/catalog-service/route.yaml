@@ -1,0 +1,24 @@
+{{- if .Values.catalogService.route.enabled -}}
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: {{ .Values.catalogService.name }}
+  labels:
+    app.kubernetes.io/name: {{ .Values.catalogService.name }}
+    {{- include "catalog-app.selectorLabels" . | nindent 4 }}
+spec:
+  {{ if .Values.catalogService.route.host }}
+  host: {{ .Values.catalogService.route.host }}
+  {{ end }}
+  port:
+    targetPort: {{ .Values.catalogService.service.portName }}
+  to:
+    kind: Service
+    name: {{ .Values.catalogService.name }}
+    weight: 100
+  wildcardPolicy: None
+  {{- if .Values.catalogService.route.tlsEnabled }}
+  tls:
+    {{- toYaml .Values.catalogService.route.tls | nindent 4 }}
+  {{ end }}
+{{ end }}
