@@ -1,4 +1,0 @@
-catalog-app:
-  catalogService:
-    route:
-      enabled: true

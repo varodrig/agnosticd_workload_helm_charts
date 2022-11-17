@@ -1,0 +1,15 @@
+{{- if .Values.deployOperator -}}
+---
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: mta-operator
+  labels:
+    {{- include "mta.labels" . | nindent 4 }}
+spec:
+  channel: {{ .Values.operatorChannel }}
+  installPlanApproval: Automatic
+  name: mta-operator
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+{{- end -}}

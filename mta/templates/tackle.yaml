@@ -1,0 +1,18 @@
+---
+apiVersion: tackle.konveyor.io/v1alpha1
+kind: Tackle
+metadata:
+  name: tackle
+  labels:
+    {{- include "mta.labels" . | nindent 4 }}
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  feature_auth_required: {{ .Values.tackleInstance.featureAuthRequired }}
+  hub_bucket_volume_size: {{ .Values.tackleInstance.hubBucketVolumeSize }}
+  hub_database_volume_size: {{ .Values.tackleInstance.hubDatabaseVolumeSize }}
+  keycloak_database_data_volume_size: {{ .Values.tackleInstance.keycloakDatabaseVolumeSize }}
+  maven_data_volume_size: {{ .Values.tackleInstance.mavenDataVolumeSize }}
+  pathfinder_database_data_volume_size: {{ .Values.tackleInstance.pathfinderDatabaseDataVolumeSize }}
+  rwo_storage_class: {{ .Values.tackleInstance.rwoStorageClass }}
+  rwx_storage_class: {{ .Values.tackleInstance.rwxStorageClass }}
