@@ -16,7 +16,7 @@ deployOperator: true
 operatorChannel: stable-v6.0
 
 # Deploy Seed Job
-  : false
+seedTackle: false
 seedJob:
   repository: quay.io/gpte-devops-automation/tackle2-setup
   tag: "v2.1.3"
