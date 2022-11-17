@@ -32,7 +32,7 @@ spec:
         - name: TACKLE2_PASSWORD
           value: "{{ .Values.tacklePassword }}"
         - name: TACKLE2_SVC
-          value: "{{ .Values.tackleSvc }}"
+          value: "{{ .Values.tackleUIServiceName }}"
       dnsPolicy: ClusterFirst
       restartPolicy: Never
       securityContext: {}
