@@ -10,7 +10,7 @@ spec:
   channel: {{ .Values.operatorChannel }}
   installPlanApproval: Automatic
   name: mta-operator
-{{- if .Values.useCatalogSource -}}
+{{- if .Values.useCatalogSource1 -}}
   source: {{ .Values.catalogSource.name }}
   sourceNamespace: {{ .Values.catalogSource.namespace }}
 {{- else -}}
