@@ -1,4 +1,4 @@
-{{- if .Values.deployOperator -}}
+{{- if .Values.deployOperator }}
 ---
 apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
@@ -10,11 +10,11 @@ spec:
   channel: {{ .Values.operatorChannel }}
   installPlanApproval: Automatic
   name: mta-operator
-{{- if .Values.useCatalogSource -}}
+{{- if .Values.useCatalogSource }}
   source: "{{ .Values.catalogSource.name }}"
   sourceNamespace: {{ .Values.catalogSource.namespace }}
-{{- else -}}
+{{- else }}
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-{{- end -}}
-{{- end -}}
+{{- end }}
+{{- end }}
