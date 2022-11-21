@@ -11,7 +11,7 @@ spec:
   installPlanApproval: Automatic
   name: mta-operator
 {{- if .Values.useCatalogSource -}}
-  source: {{ .Values.catalogSource.name }}
+  source: "{{ .Values.catalogSource.name }}"
   sourceNamespace: {{ .Values.catalogSource.namespace }}
 {{- else -}}
   source: redhat-operators
