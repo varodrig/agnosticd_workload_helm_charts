@@ -47,4 +47,4 @@ catalogSource:
   name: redhat-operators-snapshot-mta6
   namespace: openshift-mta
   image: quay.io/gpte-devops-automation/olm_snapshot_redhat_catalog
-  tag: v4.11_2022_11_14
+  tag: v4.11_2022_11_21
