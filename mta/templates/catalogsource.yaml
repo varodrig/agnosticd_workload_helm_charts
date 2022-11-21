@@ -1,4 +1,4 @@
-{{- if .Values.useCatalogSource -}}
+{{- if .Values.useCatalogSource }}
 ---
 apiVersion: operators.coreos.com/v1alpha1
 kind: CatalogSource
@@ -10,4 +10,4 @@ spec:
   image: "{{ .Values.catalogSource.image }}:{{ .Values.catalogSource.tag }}"
   displayName: "{{ .Values.catalogSource.name }}"
   publisher: "Red Hat AgnosticD"
-{{- end -}}
+{{- end }}
