@@ -51,6 +51,10 @@ spec:
           requests:
             cpu: {{ .requests.cpu }}
             memory: {{ .requests.memory }}
+{{- if .limits }}
+          limits:
+            memory: {{ .limits.memory }}
+{{- end }}
 {{- end }}
         ports:
         - name: codeserver
