@@ -1,0 +1,22 @@
+# Default values for userquota.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+nameOverride: ""
+fullnameOverride: ""
+
+userNameBase: user
+numberOfUsers: 3
+
+clusterResourceQuota:
+  hard:
+    requests.cpu: "10"
+    requests.memory: 6Gi
+    limits.cpu: "20"
+    limits.memory: 20Gi
+    pods: "20"
+    configmaps: "150"
+    secrets: "150"
+    services: "150"
+    persistentvolumeclaims: "15"
+    requests.storage: 50Gi
