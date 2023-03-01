@@ -1,0 +1,13 @@
+{{- range untilStep 1 (int (add .Values.numberOfUsers 1)) 1 }}
+---
+apiVersion: quota.openshift.io/v1
+kind: ClusterResourceQuota
+metadata:
+  name: "{{ $.Values.userNameBase }}{{ . }}"
+spec:
+  selector:
+    annotations:
+      openshift.io/requester: "{{ $.Values.userNameBase }}{{ . }}"
+    labels: null
+  quota: {{ $.Values.clusterResourceQuota | toJson }}
+{{- end }}
