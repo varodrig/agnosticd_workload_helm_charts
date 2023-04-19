@@ -14,12 +14,5 @@ spec:
   keycloak_database_data_volume_size: {{ .Values.tackleInstance.keycloakDatabaseVolumeSize }}
   maven_data_volume_size: {{ .Values.tackleInstance.mavenDataVolumeSize }}
   pathfinder_database_data_volume_size: {{ .Values.tackleInstance.pathfinderDatabaseDataVolumeSize }}
-{% if ocp4_workload_mta6_rwo_storage_class | length > 0 %}
-  rwo_storage_class: {{ ocp4_workload_mta6_rwo_storage_class }}
-{% endif %}
-{% if ocp4_workload_mta6_rwx_storage_class | length > 0 %}
-  rwx_storage_class: {{ ocp4_workload_mta6_rwx_storage_class }}
-{% endif %}
-{% if not ocp4_workload_mta6_rwx_supported %}
-  rwx_supported: false
-{% endif %}
+  rwo_storage_class: {{ .Values.tackleInstance.rwoStorageClass }}
+  rwx_storage_class: {{ .Values.tackleInstance.rwxStorageClass }}
