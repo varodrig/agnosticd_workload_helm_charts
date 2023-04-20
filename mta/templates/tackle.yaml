@@ -17,4 +17,3 @@ spec:
   rwx_supported: {{ .Values.tackleInstance.rwx_supported }}
   rwo_storage_class: "{{ .Values.tackleInstance.rwoStorageClass }}"
   rwx_storage_class: "{{ .Values.tackleInstance.rwxStorageClass }}"
-  featureAuthRequired: {{ .Values.tackleInstance.featureAuthRequired }}
