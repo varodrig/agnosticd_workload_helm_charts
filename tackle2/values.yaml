@@ -37,3 +37,4 @@ tackleInstance:
   pathfinderDatabaseDataVolumeSize: 1Gi
   rwoStorageClass: ocs-storagecluster-ceph-rbd
   rwxStorageClass: ocs-storagecluster-cephfs  
+  rwxSupported: true
