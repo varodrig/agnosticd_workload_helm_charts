@@ -2,3 +2,4 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: rhdh-k8s-plugin
+  namespace: {{ _ocp4_workload_mad_roadshow_namespace }}

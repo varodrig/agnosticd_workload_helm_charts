@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: sa-token-secret
+  namespace: {{ _ocp4_workload_mad_roadshow_namespace }}
   annotations:
     kubernetes.io/service-account.name: rhdh-k8s-plugin
 type: kubernetes.io/service-account-token
