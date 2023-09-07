@@ -2,7 +2,6 @@ kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: argocd-devhub
-  namespace: {{ _ocp4_workload_mad_roadshow_namespace }}
 rules:
   - verbs:
       - get
