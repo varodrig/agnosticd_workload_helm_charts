@@ -1,0 +1,125 @@
+# Source: developer-hub/charts/upstream/templates/backstage-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: developer-hub
+  labels:
+    {{- include "rhdh.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "rhdh.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "rhdh.selectorLabels" . | nindent 8 }}
+    spec:
+      serviceAccountName: default
+      volumes:
+        - name: app-config-rhdh
+          configMap:
+            name: app-config-rhdh
+        - name: backstage-tls
+          secret:
+            defaultMode: 420
+            secretName: backstage-tls
+        - name: backstage-app-config
+          configMap:
+            name: backstage-app-config
+
+      imagePullSecrets:
+        - name: rhdh-pull-secret
+      containers:
+        - name: backstage-backend
+          image: quay.io/rhdh/developer-hub-rhel9:1.0-8
+          imagePullPolicy: "Always"
+          command:
+            - node
+            - packages/backend
+          args:
+            - "--config"
+            - "app-config.yaml"
+            - "--config"
+            - "app-config.example.yaml"
+            - "--config"
+            - "app-config.example.production.yaml"
+            - "--config"
+            - "/app/app-config-rhdh.yaml"
+            - "--config"
+            - "/app/app-config-rhdh.yaml"
+            - "--config"
+            - "/app/app-config-from-configmap.yaml"
+          envFrom:
+            - secretRef:
+                name: rhdh-secrets
+          env:
+            - name: APP_CONFIG_backend_listen_port
+              value: "7007"
+            - name: POSTGRES_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "rhdh.fullname" . }}-postgresql
+                  key: databaseHost 
+            - name: POSTGRES_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "rhdh.fullname" . }}-postgresql
+                  key: databasePort
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "rhdh.fullname" . }}-postgresql
+                  key: databaseUser
+             - name: POSTGRES_ADMIN_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "rhdh.fullname" . }}-postgresql
+                  key: databaseAdminUser
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "rhdh.postgresql.name" . }}
+                  key: databasePassword
+            - name: POSTGRES_POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "rhdh.postgresql.name" . }}
+                  key: databaseAdminPassword 
+          ports:
+            - name: backend
+              containerPort: 7007
+              protocol: TCP
+          volumeMounts:
+            - name: app-config-rhdh
+              mountPath: "/app/app-config-rhdh.yaml"
+              subPath: app-config-rhdh.yaml
+            - name: backstage-app-config
+              mountPath: "/app/app-config-from-configmap.yaml"
+              subPath: app-config.yaml
+            - mountPath: /tmp/fakepath
+              name: backstage-tls
+        - args:
+          - -provider=openshift
+          - '-https-address=:{{ .Values.oauth.port }}'
+          - -http-address=
+          - -email-domain=*
+          - -upstream=http://localhost:7007
+          - '-tls-cert={{ .Values.oauth.tls-cert }}'
+          - '-tls-key={{ .Values.oauth.tls-key }}'
+          - -cookie-secret={{ .Values.oauth.cookie-secret }}'
+          - '-openshift-service-account={{ .Values.oauth.service-account}}'
+          - '-openshift-ca={{ .Values.oauth.tls-ca }}'
+          - -skip-auth-regex=^/metrics
+          - -skip-provider-button
+          - -request-logging=true
+          image: registry.redhat.io/openshift4/ose-oauth-proxy:v4.12
+          imagePullPolicy: IfNotPresent
+          name: oauth-proxy
+          ports:
+          - containerPort: {{ .Values.oauth.port }}
+            name: oauth-proxy
+            protocol: TCP
+          volumeMounts:
+          - mountPath: /etc/tls/private
+            name: backstage-tls

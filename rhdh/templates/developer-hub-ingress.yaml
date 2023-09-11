@@ -1,0 +1,21 @@
+# Source: developer-hub/charts/upstream/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: developer-hub
+  labels:
+    {{- include "rhdh.labels" . | nindent 4 }}
+  annotations:
+    route.openshift.io/termination: reencrypt
+spec:
+  rules:
+    - host: {{ .Values.app.baseUrl }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: developer-hub
+                port:
+                  number: 8888

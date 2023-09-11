@@ -1,0 +1,73 @@
+pullSecret: xxx
+
+app:
+  baseUrl: ""
+
+backend:
+  baseUrl: ""
+  cors:
+    origin: ""
+  reading:
+    allow:
+      - host: ''
+
+
+clusters:
+  - name: dev-cluster-infra
+    url: ""
+    serviceAccountToken: ""
+
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+
+oauth:
+  port: "" 
+  service-account: ""
+  tls-cert: ""
+  tls-key: ""
+  tls-ca: ""
+  cookie-secret: ""
+
+service:
+  type: ClusterIP
+  port: 8080
+
+# name of instances
+name: rhdh
+
+
+integrations:
+  gitlab:
+    - host: ""
+      baseUrl: ""
+      apiBaseUrl: ""
+      token: ""
+
+catalog:
+  locations:
+  - target: ""
+    type: url
+    rules:
+      - allow: [Template]
+  providers:
+    gitlab:
+      selfHosted:
+        host: ""
+
+postgress:
+  databasePassword: "${POSTGRES_DB_PASSWORD}"
+  databaseAdminPassword: "${POSTGRES_DB_PASSWORD}"
+  password: "${POSTGRES_PASSWORD}"
+  databaseHost: "${POSTGRES_HOST}"
+  databasePort:  "${POSTGRES_PORT}"
+  databaseUser: "${POSTGRES_USER}"
+  databaseAdminUser: "${POSTGRES_ADMIN_USER}"
+
+
+ 
+      
+
+

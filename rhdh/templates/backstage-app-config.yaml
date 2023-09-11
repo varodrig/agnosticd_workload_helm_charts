@@ -1,0 +1,21 @@
+# Source: developer-hub/charts/upstream/templates/app-config-configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backstage-app-config
+data:
+  app-config.yaml: |
+    app:
+      baseUrl: {{ (trimPrefix  "https://" .Values.app.baseUrl) | trimPrefix  "http://" | trimSuffix "/"  }}
+    backend:
+      baseUrl: {{ (trimPrefix  "https://" .Values.app.baseUrl) | trimPrefix  "http://" | trimSuffix "/"  }}
+      cors:
+        credentials: true
+        origin: {{ (trimPrefix  "https://" .Values.app.baseUrl) | trimPrefix  "http://" | trimSuffix "/"  }}
+      database:
+        connection:
+          password: ${POSTGRESQL_ADMIN_PASSWORD}
+          user: ${POSTGRESQL_ADMIN_USER}
+      reading:
+        allow:
+        - host: "*." {{ .Values.app.baseUrl }}
