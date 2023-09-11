@@ -34,7 +34,6 @@ spec:
                 topologyKey: kubernetes.io/hostname
               weight: 1
         nodeAffinity:
-
       hostNetwork: false
       hostIPC: false
       containers:

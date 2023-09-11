@@ -1,0 +1,75 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: app-config-rhdh
+data:
+  app-config-rhdh.yaml: |
+    app:
+       # Configurations define above
+    argocd:
+      appLocatorMethods:
+        - type: 'config'
+          instances:
+            - name: main
+              url:  "{{ .Values.argocd.appLocatorMethods.type['config'].instances[0].url }}"
+              token: "{{ .Values.argocd.appLocatorMethods.type['config'].instances[0].token }}"
+    kubernetes:
+      serviceLocatorMethod:
+        type: 'multiTenant'
+      clusterLocatorMethods:
+        - type: 'config'
+          clusters:
+            - name: dev-cluster
+              url: "{{ .Values.clusters[0].url }}"
+              authProvider: "serviceAccount"
+              skipTLSVerify: true
+              serviceAccountToken: "{{ .Values.clusters[0].serviceAccountToken }}"
+      customResources:
+        - group: 'tekton.dev'
+          apiVersion: 'v1beta1'
+          plural: 'pipelineruns'
+        - group: 'tekton.dev'
+          apiVersion: 'v1beta1'
+          plural: 'taskruns'
+    catalog:
+      rules:
+        - allow: [Component, System, API, Resource, Location, Template]
+      locations:
+        - target: "{{ .Values.catalog.locations.target[0]}}"
+          type: url
+          rules:
+          - allow: [Template]
+      providers:
+        ocm:
+          env:
+            kubernetesPluginRef: dev-cluster
+          operate-first:
+            name: dev-cluster
+            url: "{{ .Values.clusters[0].url }}"
+            serviceAccountToken: "{{ .Values.clusters[0].serviceAccountToken }}"
+            skipTLSVerify: true
+            authProvider: "serviceAccount"
+
+    auth:
+      environment: development
+      providers:
+        oauth2Proxy:
+          development: {}
+
+    integrations:
+      gitlab:
+        - host: ""
+          baseUrl: ""
+          apiBaseUrl: ""
+          token: ""
+
+    enabled:
+      kubernetes: true
+      github: false
+      argocd: true
+      githubOrg: false
+      techdocs: false
+      ocm: true
+     
+
+ 

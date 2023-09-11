@@ -13,7 +13,7 @@ backend:
 
 
 clusters:
-  - name: dev-cluster-infra
+  - name: dev-cluster
     url: ""
     serviceAccountToken: ""
 
@@ -66,7 +66,13 @@ postgress:
   databaseUser: "${POSTGRES_USER}"
   databaseAdminUser: "${POSTGRES_ADMIN_USER}"
 
-
+argocd:
+  appLocatorMethods:
+    - type: 'config'
+      instances:
+        - name: main
+          url: 	""
+          token:
  
       
 
