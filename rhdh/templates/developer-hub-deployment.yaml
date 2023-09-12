@@ -71,7 +71,7 @@ spec:
                 secretKeyRef:
                   name: {{ include "rhdh.fullname" . }}-postgresql
                   key: databaseUser
-             - name: POSTGRES_ADMIN_USER
+            - name: POSTGRES_ADMIN_USER
               valueFrom:
                 secretKeyRef:
                   name: {{ include "rhdh.fullname" . }}-postgresql
