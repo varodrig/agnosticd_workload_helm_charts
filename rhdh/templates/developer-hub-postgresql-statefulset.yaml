@@ -118,9 +118,9 @@ spec:
             - name: data
               mountPath: /var/lib/pgsql/data
       volumes:
-        - name: dshm
-          emptyDir:
-            medium: Memory
+      - name: dshm
+        emptyDir:
+          medium: Memory
   volumeClaimTemplates:
     - metadata:
         name: data
