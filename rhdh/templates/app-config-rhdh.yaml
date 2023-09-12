@@ -23,6 +23,7 @@ data:
         type: 'multiTenant'
       clusterLocatorMethods:
         - type: 'config'
+          clusters:
        {{- range $item := $.Values.clusters }}
             - name: dev-cluster
               url: {{ $item.url }}
