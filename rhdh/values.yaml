@@ -57,7 +57,7 @@ catalog:
       selfHosted:
         host: ""
 
-postgress:
+postgresql:
   databasePassword: "${POSTGRES_DB_PASSWORD}"
   databaseAdminPassword: "${POSTGRES_DB_PASSWORD}"
   password: "${POSTGRES_PASSWORD}"
