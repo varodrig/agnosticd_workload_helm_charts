@@ -114,9 +114,6 @@ helm.sh/chart: {{ include "rhdh.chart" . }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
-{{- if .Values.postgres.storage.labels }}
-{{- tpl (toYaml .Values.postgres.storage.labels) $ }}
-{{- end     }}
 {{- end }}
 
 {{/*
