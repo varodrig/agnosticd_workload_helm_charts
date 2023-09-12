@@ -70,13 +70,6 @@ data:
         oauth2Proxy:
           development: {}
 
-    integrations:
-      gitlab:
-        - host: ""
-          baseUrl: ""
-          apiBaseUrl: ""
-          token: ""
-
     enabled:
       kubernetes: true
       github: false
