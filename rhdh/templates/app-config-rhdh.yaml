@@ -41,10 +41,14 @@ data:
       rules:
         - allow: [Component, System, API, Resource, Location, Template]
       locations:
-        - target: "{{ .Values.catalog.locations.target[0]}}"
-          type: url
+{{- range $item := $.Values.catalog.locations }}
+        - target: {{ $item.target }}
+          type: {{ $item.type }}
           rules:
-          - allow: [Template]
+{{- range $item1 := $item.rules }}
+            - allow: {{ $item1.allow }}
+{{- end }}
+{{- end }}
       providers:
         ocm:
           env:
