@@ -25,11 +25,11 @@ fullnameOverride: ""
 
 oauth:
   port: "" 
-  service-account: ""
-  tls-cert: ""
-  tls-key: ""
-  tls-ca: ""
-  cookie-secret: ""
+  serviceAccount: ""
+  tlsCert: ""
+  tlsKey: ""
+  tlsCa: ""
+  cookieSecret: ""
 
 service:
   type: ClusterIP

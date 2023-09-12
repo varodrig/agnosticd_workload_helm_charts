@@ -105,11 +105,11 @@ spec:
           - -http-address=
           - -email-domain=*
           - -upstream=http://localhost:7007
-          - '-tls-cert={{ .Values.oauth.tls-cert }}'
-          - '-tls-key={{ .Values.oauth.tls-key }}'
-          - -cookie-secret={{ .Values.oauth.cookie-secret }}'
-          - '-openshift-service-account={{ .Values.oauth.service-account}}'
-          - '-openshift-ca={{ .Values.oauth.tls-ca }}'
+          - '-tls-cert={{ .Values.oauth.tlsCert }}'
+          - '-tls-key={{ .Values.oauth.tlsKey }}'
+          - -cookie-secret={{ .Values.oauth.cookieSecret }}'
+          - '-openshift-service-account={{ .Values.oauth.serviceAccount}}'
+          - '-openshift-ca={{ .Values.oauth.tlsCa }}'
           - -skip-auth-regex=^/metrics
           - -skip-provider-button
           - -request-logging=true
