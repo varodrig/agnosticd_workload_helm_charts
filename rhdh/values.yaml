@@ -65,6 +65,7 @@ postgresql:
   databasePort:  "${POSTGRES_PORT}"
   databaseUser: "${POSTGRES_USER}"
   databaseAdminUser: "${POSTGRES_ADMIN_USER}"
+  database_name: postgres
 
 argocd:
   appLocatorMethods:
