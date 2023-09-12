@@ -115,8 +115,6 @@ spec:
               cpu: 250m
               memory: 256Mi
           volumeMounts:
-            - name: dshm
-              mountPath: /dev/shm
             - name: data
               mountPath: /var/lib/pgsql/data
       volumes:
