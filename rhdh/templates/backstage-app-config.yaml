@@ -18,4 +18,6 @@ data:
           user: ${POSTGRESQL_ADMIN_USER}
       reading:
         allow:
-        - host: "*." {{ .Values.app.baseUrl }}
+  {{- range $item := $.Values.backend.reading.allow }}
+          - host: '{{ $item.host }}'
+  {{- end }}
