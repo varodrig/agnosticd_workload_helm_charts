@@ -20,7 +20,6 @@ spec:
       labels:
         {{- include "rhdh.postgresql.selectorLabels" . | nindent 8 }}
     spec:
-      serviceAccountName: default
       containers: 
       - env:
         - name: BITNAMI_DEBUG
@@ -114,19 +113,15 @@ spec:
             requests:
               cpu: 250m
               memory: 256Mi
+{{- if .Values.postgresql.storage.enabled }}
           volumeMounts:
-            - name: data
-              mountPath: /var/lib/pgsql/data
+            - mountPath: /var/lib/postgresql/data
+              name: postgresdb
+{{- end }}
+      serviceAccount: {{ include "rhdh.serviceAccountName" . }}
+{{- if .Values.postgresql.storage.enabled }}
       volumes:
-      - name: dshm
-        emptyDir:
-          medium: Memory
-  volumeClaimTemplates:
-    - metadata:
-        name: data
-      spec:
-        accessModes:
-          - "ReadWriteOnce"
-        resources:
-          requests:
-            storage: "1Gi"
+      - name: postgresdb
+        persistentVolumeClaim:
+          claimName: {{ include "rhdh.postgresql.name" . }}
+{{- end }}

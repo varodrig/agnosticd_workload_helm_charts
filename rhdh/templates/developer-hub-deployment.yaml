@@ -15,7 +15,7 @@ spec:
       labels:
         {{- include "rhdh.selectorLabels" . | nindent 8 }}
     spec:
-      serviceAccountName: default
+      serviceAccountName: {{ include "rhdh.serviceAccountName" . }}
       volumes:
         - name: app-config-rhdh
           configMap:
