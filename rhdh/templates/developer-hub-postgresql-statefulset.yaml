@@ -115,8 +115,9 @@ spec:
               memory: 256Mi
 {{- if .Values.postgresql.storage.enabled }}
           volumeMounts:
-            - mountPath: /var/lib/postgresql/data
-              name: postgresdb
+            - name: postgresdb
+              mountPath: /var/lib/postgresql/data
+              
 {{- end }}
       serviceAccount: {{ include "rhdh.serviceAccountName" . }}
 {{- if .Values.postgresql.storage.enabled }}
