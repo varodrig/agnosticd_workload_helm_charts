@@ -103,3 +103,26 @@ Create the postgresql name
 {{- define "rhdh.postgresql.name" -}}
 {{- printf "%s-postgresql" (include "rhdh.fullname" . ) }}
 {{- end }}
+
+{{/*
+Postgresql Common labels
+*/}}
+{{- define "rhdh.postgresql.labels" -}}
+helm.sh/chart: {{ include "rhdh.chart" . }}
+{{ include "rhdh.postgresql.selectorLabels" . }}
+{{- if .Chart.AppVersion }}
+app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+{{- end }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{- if .Values.postgres.storage.labels }}
+{{- tpl (toYaml .Values.postgres.storage.labels) $ }}
+{{- end     }}
+{{- end }}
+
+{{/*
+Postresql Selector labels
+*/}}
+{{- define "rhdh.postgresql.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "rhdh.name" . }}-{{ .Values.postgres.database_name }}
+app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
