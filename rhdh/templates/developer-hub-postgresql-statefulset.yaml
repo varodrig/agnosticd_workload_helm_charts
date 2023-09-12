@@ -119,10 +119,10 @@ spec:
             mountPath: /var/lib/postgresql/data
                 
   {{- end }}
-        serviceAccount: {{ include "rhdh.serviceAccountName" . }}
+      serviceAccount: {{ include "rhdh.serviceAccountName" . }}
   {{- if .Values.postgresql.storage.enabled }}
-        volumes:
-          - name: postgresdb
-            persistentVolumeClaim:
-              claimName: {{ include "rhdh.postgresql.name" . }}
+      volumes:
+        - name: postgresdb
+          persistentVolumeClaim:
+            claimName: {{ include "rhdh.postgresql.name" . }}
   {{- end }}
