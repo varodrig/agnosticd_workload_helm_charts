@@ -8,22 +8,28 @@ data:
        # Configurations define above
     argocd:
       appLocatorMethods:
-        - type: 'config'
+{{- range $item := $.Values.argocd.appLocatorMethods }}
+        - type: '{{ $item.type }}'
           instances:
-            - name: main
-              url:  "{{ .Values.argocd.appLocatorMethods.type['config'].instances[0].url }}"
-              token: "{{ .Values.argocd.appLocatorMethods.type['config'].instances[0].token }}"
+{{- range $item1 := $item.instances }}
+            - name: {{ $item1.name }}
+              url: 	{{ $item1.url }}
+              token: {{ $item1.token }}
+{{- end }}
+{{- end }}
+
     kubernetes:
       serviceLocatorMethod:
         type: 'multiTenant'
       clusterLocatorMethods:
         - type: 'config'
-          clusters:
+       {{- range $item := $.Values.clusters }}
             - name: dev-cluster
-              url: "{{ .Values.clusters[0].url }}"
+              url: {{ $item.url }}
               authProvider: "serviceAccount"
               skipTLSVerify: true
-              serviceAccountToken: "{{ .Values.clusters[0].serviceAccountToken }}"
+              serviceAccountToken: "{{ $item.serviceAccountToken }}"
+{{- end }}
       customResources:
         - group: 'tekton.dev'
           apiVersion: 'v1beta1'
