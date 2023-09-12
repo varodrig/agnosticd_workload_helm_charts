@@ -54,11 +54,14 @@ data:
           env:
             kubernetesPluginRef: dev-cluster
           operate-first:
+           {{- range $item := $.Values.clusters }}
             name: dev-cluster
-            url: "{{ .Values.clusters[0].url }}"
-            serviceAccountToken: "{{ .Values.clusters[0].serviceAccountToken }}"
+            url:  {{ $item.url }}
+            serviceAccountToken: "{{ $item.serviceAccountToken }}"
             skipTLSVerify: true
             authProvider: "serviceAccount"
+{{- end }}
+
 
     auth:
       environment: development
