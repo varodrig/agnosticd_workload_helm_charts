@@ -20,7 +20,7 @@ clusters:
 
 imagePullSecrets: []
 nameOverride: ""
-fullnameOverride: ""
+fullnameOverride: "developer-hub"
 
 serviceAccount:
   # Specifies whether a service account should be created
