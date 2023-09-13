@@ -48,10 +48,10 @@ name: rhdh
 
 integrations:
   gitlab:
-    - host: ""
-      baseUrl: ""
-      apiBaseUrl: ""
-      token: ""
+    - host: "http://xxx.com"
+      baseUrl: "app.cluster"
+      apiBaseUrl: "app.cluster"
+      token: "afdaf"
 
 catalog:
   locations:
