@@ -61,6 +61,14 @@ data:
             serviceAccountToken: "{{ $item.serviceAccountToken }}"
             skipTLSVerify: true
             authProvider: "serviceAccount"
+        gitlab:
+          selfHosted:
+            host: {{ $.Values.catalog.providers.gitlab.selfHosted.host }}
+            schedule: # optional; same options as in TaskScheduleDefinition
+              # supports cron, ISO duration, "human duration" as used in code
+              frequency: { seconds: 10 }
+              # supports ISO duration, "human duration" as used in code
+              timeout: { seconds: 60 }
 {{- end }}
 
 
@@ -69,6 +77,15 @@ data:
       providers:
         oauth2Proxy:
           development: {}
+  
+    integrations:
+      gitlab:
+{{- range $item := $.Values.integrations.gitlab }}
+      - host: {{ $item.host }}
+        baseUrl: {{ $item.baseUrl }}
+        apiBaseUrl: {{ $item.apiBaseUrl }}
+        token: {{ $item.token }}
+{{- end }}
 
     enabled:
       kubernetes: true
@@ -77,6 +94,7 @@ data:
       githubOrg: false
       techdocs: false
       ocm: true
+      gitlab: true
      
 
  
