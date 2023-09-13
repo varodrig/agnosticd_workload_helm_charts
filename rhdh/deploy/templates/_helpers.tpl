@@ -68,8 +68,8 @@ Create the name of the service account to use
 Check for existing secret
 */}}
 {{- define "gen.postgres-password" -}}
-{{- if .Values.postgres.database_password }}
-databasePassword: {{ .Values.postgres.database_password | quote }}
+{{- if .Values.postgresql.databasePassword }}
+databasePassword: {{ .Values.postgresql.databasePassword | quote }}
 {{- else -}}
 {{/*
 This will NOT work with ArgoCD, it currently does not support lookup functions
@@ -120,6 +120,6 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 Postresql Selector labels
 */}}
 {{- define "rhdh.postgresql.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "rhdh.name" . }}-{{ .Values.postgresql.database_name }}
+app.kubernetes.io/name: {{ include "rhdh.name" . }}-{{ .Values.postgresql.databaseName }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
