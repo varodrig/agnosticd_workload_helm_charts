@@ -72,7 +72,7 @@ postgresql:
   databasePort:  "${POSTGRES_PORT}"
   databaseUser: "${POSTGRES_USER}"
   databaseAdminUser: "${POSTGRES_ADMIN_USER}"
-  database_name: postgres
+  databaseName: postgres
   storage:
     enabled: true
     size: 2G
