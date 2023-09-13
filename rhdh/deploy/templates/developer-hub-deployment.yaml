@@ -50,9 +50,6 @@ spec:
             - "/app/app-config-rhdh.yaml"
             - "--config"
             - "/app/app-config-from-configmap.yaml"
-          envFrom:
-            - secretRef:
-                name: rhdh-secrets
           env:
             - name: APP_CONFIG_backend_listen_port
               value: "7007"
