@@ -2,6 +2,7 @@ pullSecret: xxx
 
 app:
   baseUrl: ""
+  host: ""
 
 backend:
   baseUrl: ""
