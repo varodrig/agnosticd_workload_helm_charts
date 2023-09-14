@@ -46,8 +46,8 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 Selector labels
 */}}
 {{- define "rhdh.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "rhdh.name" . }}
-app.kubernetes.io/instance:  {{ include "rhdh.name" . }}
+app.kubernetes.io/name: {{ include "rhdh.fullname" . }}
+app.kubernetes.io/instance:  {{ include "rhdh.fullname" . }}
 {{- end }}
 
 {{/*
