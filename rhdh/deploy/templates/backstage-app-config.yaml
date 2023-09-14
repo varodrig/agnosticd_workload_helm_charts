@@ -6,18 +6,14 @@ metadata:
 data:
   app-config.yaml: |
     app:
-      baseUrl: {{ (trimPrefix  "https://" .Values.app.baseUrl) | trimPrefix  "http://" | trimSuffix "/"  }}
+      baseUrl: {{ .Values.app.baseUrl }}
     backend:
-      baseUrl: {{ (trimPrefix  "https://" .Values.app.baseUrl) | trimPrefix  "http://" | trimSuffix "/"  }}
+      baseUrl: {{ .Values.app.baseUrl }}
       cors:
         credentials: true
-        origin: {{ (trimPrefix  "https://" .Values.app.baseUrl) | trimPrefix  "http://" | trimSuffix "/"  }}
+        origin: {{ .Values.app.baseUrl }}
       database:
         connection:
           password: ${POSTGRESQL_ADMIN_PASSWORD}
           user: ${POSTGRESQL_ADMIN_USER}
-      reading:
-        allow:
-  {{- range $item := $.Values.backend.reading.allow }}
-          - host: '{{ $item.host }}'
-  {{- end }}
+
