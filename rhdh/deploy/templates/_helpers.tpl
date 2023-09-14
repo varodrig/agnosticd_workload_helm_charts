@@ -121,5 +121,5 @@ Postresql Selector labels
 */}}
 {{- define "rhdh.postgresql.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "rhdh.postgresql.name"  . }}
-app.kubernetes.io/instance: {{ include"rhdh.fullname"  . }}
+app.kubernetes.io/instance: {{ include "rhdh.fullname"  . }}
 {{- end }}
