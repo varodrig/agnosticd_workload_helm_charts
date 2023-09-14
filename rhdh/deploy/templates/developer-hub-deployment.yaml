@@ -78,6 +78,11 @@ spec:
                 secretKeyRef:
                   name: {{ include "rhdh.postgresql.name" . }}
                   key: databaseAdminPassword 
+            - name: POSTGRESQL_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "rhdh.postgresql.name" . }}
+                  key: databaseAdminPassword
           ports:
             - name: backend
               containerPort: 7007
