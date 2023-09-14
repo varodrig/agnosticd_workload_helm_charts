@@ -9,7 +9,7 @@ backend:
     origin: ""
   reading:
     allow:
-      - host: ''
+      - host: 'sfd'
 
 
 clusters:
