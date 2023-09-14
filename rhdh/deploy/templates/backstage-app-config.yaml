@@ -16,4 +16,7 @@ data:
         connection:
           password: "{{ .Values.postgresql.databaseAdminPassword }}"
           user: "{{ .Values.postgresql.databaseAdminUser }}"
+       reading:
+        allow:
+        - host: "{{ .Values.app.cluster }}"
 

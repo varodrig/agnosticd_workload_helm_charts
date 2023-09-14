@@ -3,6 +3,7 @@ pullSecret: xxx
 app:
   baseUrl: ""
   host: ""
+  cluster: ""
 
 backend:
   baseUrl: ""
