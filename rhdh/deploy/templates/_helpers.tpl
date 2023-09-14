@@ -109,7 +109,9 @@ Postgresql Common labels
 */}}
 {{- define "rhdh.postgresql.labels" -}}
 helm.sh/chart: {{ include "rhdh.chart" . }}
+app.kubernetes.io/component: primary
 {{ include "rhdh.postgresql.selectorLabels" . }}
+app.kubernetes.io/component: primary
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -122,4 +124,5 @@ Postresql Selector labels
 {{- define "rhdh.postgresql.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "rhdh.postgresql.name"  . }}
 app.kubernetes.io/instance: {{ include "rhdh.fullname"  . }}
+app.kubernetes.io/component: primary
 {{- end }}
