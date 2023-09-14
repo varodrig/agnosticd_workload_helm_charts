@@ -120,6 +120,6 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 Postresql Selector labels
 */}}
 {{- define "rhdh.postgresql.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "rhdh.name" . }}-{{ .Values.postgresql.databaseName }}
-app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/name: {{ include "rhdh.postgresql.name"  . }}
+app.kubernetes.io/instance: {{ include"rhdh.fullname"  . }}
 {{- end }}
