@@ -2,6 +2,7 @@
 kind: Keycloak
 metadata:
   name: rhsso-backstage
+  namespace: rhsso
   labels:
     app: rhsso-backstage
     app.kubernetes.io/instance: rhsso-backstage
