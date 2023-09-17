@@ -68,8 +68,11 @@ Create the name of the service account to use
 {{- if .Values.serviceAccount.create }}
 annotations: 
     serviceaccounts.openshift.io/oauth-redirecturi.backstage: {{ .Values.serviceAccount.annotations.CallbackUrl }}
-automountServiceAccountToken: {{ .Values.serviceAccount.automountServiceAccountToken }}
 {{- end }}
+{{- end }}
+
+{{- define "rhdh.serviceAccount.automountServiceAccountToken" -}}
+{{- default "true" .Values.serviceAccount.automountServiceAccountToken }}
 {{- end }}
 
 {{/*
