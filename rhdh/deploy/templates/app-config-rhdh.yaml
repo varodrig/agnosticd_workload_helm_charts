@@ -93,8 +93,9 @@ data:
       argocd: true
       githubOrg: false
       techdocs: false
-      ocm: true
+      ocm: false
       gitlab: true
+      keycloak: false
      
 
  

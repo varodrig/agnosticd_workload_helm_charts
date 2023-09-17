@@ -64,9 +64,17 @@ Create the name of the service account to use
 {{- end }}
 {{- end }}
 
+{{- define "rhdh.serviceAccount.annotations" -}}
+{{- if .Values.serviceAccount.create }}
+annotations: "serviceaccounts.openshift.io/oauth-redirecturi.backstage: {{ .Values.backend.baseUrl }}/oauth/callback"
+automountServiceAccountToken: true
+{{- end }}
+{{- end }}
+
 {{/*
 Check for existing secret
 */}}
+
 {{- define "gen.postgres-password" -}}
 {{- if .Values.postgresql.databasePassword }}
 databasePassword: {{ .Values.postgresql.databasePassword | quote }}
