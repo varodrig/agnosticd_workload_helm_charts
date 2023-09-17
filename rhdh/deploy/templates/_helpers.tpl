@@ -23,6 +23,8 @@ If release name contains chart name it will be used as a full name.
 {{- end }}
 {{- end }}
 
+
+
 {{/*
 Create chart name and version as used by the chart label.
 */}}
@@ -53,6 +55,7 @@ app.kubernetes.io/instance:  {{ include "rhdh.fullname" . }}
 {{/*
 
 
+
 {{/*
 Create the name of the service account to use
 */}}
@@ -64,9 +67,13 @@ Create the name of the service account to use
 {{- end }}
 {{- end }}
 
-{{- define "rhdh.serviceAccount.annotations" -}}
+{{- define "rhdh.sa.annot" -}}
+{{- .Values.app.baseUrl }}
+{{- end }}
+
+{{- define "rhdh.serviceAccountAnnotations" -}}
 {{- if .Values.serviceAccount.create }}
-serviceaccounts.openshift.io/oauth-redirecturi.backstage: {{ .Values.serviceAccount.annotations.callbackUrl }}
+serviceaccounts.openshift.io/oauth-redirecturi.backstage: {{ include "rhdh.sa.annot" . }}
 {{- end }}
 {{- end }}
 
