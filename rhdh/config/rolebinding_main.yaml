@@ -11,14 +11,3 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
   name: argocd-main-devhub
-
-
-
-  argocds.argoproj.io "argocd-devhub" is forbidden:
-   User "system:serviceaccount:openshift-gitops:openshift-gitops-argocd-application-controller" 
-  cannot patch resource "argocds" in API group "argoproj.io" in the namespace "rhdhub2"
-
-
- checlusters.org.eclipse.che is forbidden:
-  User "system:serviceaccount:openshift-gitops:openshift-gitops-argocd-application-controller" 
-  cannot create resource "checlusters" in API group "org.eclipse.che" in the namespace "rhdhub2"
