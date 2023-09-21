@@ -15,10 +15,11 @@ rules:
   - verbs:
       - list
       - watch
+      - create
     apiGroups:
       - argoproj.io
     resources:
-      - applications
+      - '*'
   - verbs:
       - list
     apiGroups:
