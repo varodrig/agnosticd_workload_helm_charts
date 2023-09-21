@@ -1,12 +1,12 @@
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: openshift-gitops-argocd-application-controller-rbc
+  name: openshift-gitops-argocd-application-controller-main-rbc
 subjects:
   - kind: ServiceAccount
     name: openshift-gitops-argocd-application-controller
-    namespace: "{{ _ocp4_workload_mad_roadshow_namespace }}"
+    namespace: "openshift-gitops"
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: argocd-devhub
+  name: argocd-main-devhub

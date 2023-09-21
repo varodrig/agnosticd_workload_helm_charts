@@ -1,0 +1,13 @@
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: argocd-main-devhub
+rules:
+  - verbs:
+      - list
+      - watch
+      - create
+    apiGroups:
+      - argoproj.io
+    resources:
+      - '*'
