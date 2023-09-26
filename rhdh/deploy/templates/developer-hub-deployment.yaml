@@ -1,4 +1,3 @@
-# Source: developer-hub/charts/upstream/templates/backstage-deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -27,7 +26,6 @@ spec:
         - name: backstage-app-config
           configMap:
             name: backstage-app-config
-
       imagePullSecrets:
         - name: rhdh-pull-secret
       containers:
@@ -89,29 +87,45 @@ spec:
             - name: backstage-app-config
               mountPath: "/app/app-config-from-configmap.yaml"
               subPath: app-config.yaml
-            - mountPath: /tmp/fakepath
-              name: backstage-tls
+          envFrom:
+            - secretRef:
+                name: keycloak-secrets
+            - secretRef:
+                name: keycloak-client-secret-rhdh
         - args:
-          - -provider=openshift
-          - '-https-address=:{{.Values.oauth.port}}'
-          - -http-address=
-          - -email-domain=*
-          - -upstream=http://localhost:7007
-          - '-tls-cert={{.Values.oauth.tlsCert}}'
-          - '-tls-key={{.Values.oauth.tlsKey}}'
-          - -cookie-secret={{ .Values.oauth.cookieSecret }}'
-          - '-openshift-service-account={{ .Values.oauth.serviceAccount}}'
-          - '-openshift-ca={{ .Values.oauth.tlsCa }}'
-          - -skip-auth-regex=^/metrics
-          - -skip-provider-button
-          - -request-logging=true
+          - '--provider=oidc'
+          - '--email-domain=*'
+          - '--upstream=http://localhost:7007'
+          - '--http-address=0.0.0.0:4180'
+          - '--skip-provider-button'
+          - '--insecure-oidc-allow-unverified-email=true'
           image: registry.redhat.io/openshift4/ose-oauth-proxy:v4.12
           imagePullPolicy: IfNotPresent
-          name: oauth-proxy
+          name: oauth2-proxy
+          env:
+            - name: OAUTH2_PROXY_CLIENT_ID
+              valueFrom:
+              secretKeyRef:
+                name: rhdh-keycloak-creds
+                key: oauth2Proxy.clientId
+            - name: OAUTH2_PROXY_CLIENT_SECRET
+              valueFrom:
+              secretKeyRef:
+                name: rhdh-keycloak-creds
+                key: rhsso.clientSecret
+            - name: OAUTH2_PROXY_OIDC_ISSUER_URL
+              value: {{ $.Values.oauth2Proxy.issuerUrl }}
+            - name: OAUTH2_PROXY_COOKIE_SECRET
+              valueFrom:
+              secretKeyRef:
+                name: rhdh-keycloak-creds
+                key: oauth2Proxy.cookieSecret
+            - name: OAUTH2_PROXY_SSL_INSECURE_SKIP_VERIFY
+              valueFrom:
+              secretKeyRef:
+                name: rhdh-keycloak-creds
+                key: rhsso.cookieSecret
           ports:
-          - containerPort: {{ .Values.oauth.port }}
-            name: oauth-proxy
+          - containerPort: {{ .Values.oauth2Proxy.port }}
+            name: oauth2-proxy
             protocol: TCP
-          volumeMounts:
-          - mountPath: /etc/tls/private
-            name: backstage-tls

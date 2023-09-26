@@ -5,7 +5,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: argocd-devhub-argocd-application-controller
-    namespace: rhdhub
+    namespace:  {{ $.Values.namespace }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role

@@ -7,16 +7,14 @@ data:
     app:
        # Configurations define above
     argocd:
-      username: ${ARGOCD_USERNAME}
-      password: ${ARGOCD_PASSWORD}
       appLocatorMethods:
 {{- range $item := $.Values.argocd.appLocatorMethods }}
         - type: '{{ $item.type }}'
           instances:
 {{- range $item1 := $item.instances }}
             - name: {{ $item1.name }}
-              url: 	{{ $item1.url }}
-              token: {{ $item1.token }}
+              username: ${ARGOCD_USERNAME}
+              password: ${ARGOCD_PASSWORD}
 {{- end }}
 {{- end }}
 
@@ -71,6 +69,7 @@ data:
               frequency: { seconds: 10 }
               # supports ISO duration, "human duration" as used in code
               timeout: { seconds: 60 }
+
 {{- end }}
 
 
@@ -97,7 +96,7 @@ data:
       techdocs: false
       ocm: false
       gitlab: true
-      keycloak: false
+      keycloak: true
      
 
  

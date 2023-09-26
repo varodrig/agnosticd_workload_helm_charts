@@ -1,5 +1,5 @@
 pullSecret: xxx
-
+namespace: ""
 app:
   baseUrl: ""
   host: ""
@@ -31,14 +31,20 @@ serviceAccount:
   annotations: ""
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
-  
-oauth:
-  port: "" 
-  serviceAccount: ""
-  tlsCert: ""
-  tlsKey: ""
-  tlsCa: ""
+
+keycloak:
+  baseUrl: ""
+  loginRealm: ""
+  realm: ""
+  clientId: ""
+  clientSecret: ""
+  displayName: "rhdh"
+
+oauth2Proxy:
+  issuerUrl:  https://keycloak-"{{ _ocp4_workload_mad_roadshow_namespace }}"."{{ .Values.app.host }}"/auth/realms/rhdh
   cookieSecret: ""
+  skipTlsVerify: "true"
+
 
 service:
   type: ClusterIP

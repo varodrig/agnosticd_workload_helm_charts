@@ -1,12 +1,12 @@
 ﻿apiVersion: keycloak.org/v1alpha1
 kind: Keycloak
 metadata:
-  name: rhsso-backstage
+  name: rhsso-rhdh
   namespace: rhsso
   labels:
-    app: rhsso-backstage
-    app.kubernetes.io/instance: rhsso-backstage
-    app.kubernetes.io/name: rhsso-backstage
+    app: rhsso-rhdh
+    app.kubernetes.io/instance: rhsso-rhdh
+    app.kubernetes.io/name: rhsso-rhdh
 spec:
   externalAccess:
     enabled: true

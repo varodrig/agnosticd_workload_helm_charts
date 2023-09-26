@@ -1,0 +1,28 @@
+﻿apiVersion: keycloak.org/v1alpha1
+kind: KeycloakRealm
+metadata:
+  name: rhdh
+  labels:
+    app: rhsso-rhdh
+    app.kubernetes.io/instance: rhsso-rhdh
+    app.kubernetes.io/name: rhsso-rhdh
+    rht-gitops.com/openshift-gitops: rhsso-rhdh
+spec:
+  instanceSelector:
+    matchLabels:
+      app: rhsso-rhdh
+      app.kubernetes.io/instance: rhsso-rhdh
+      app.kubernetes.io/name: rhsso-rhdh
+  realm:
+    id: {{ .Values.keycloak.realm }}
+    realm: {{ .Values.keycloak.realm }}
+    enabled: true
+    displayName: {{ .Values.keycloak.realm.displayName }}
+    identityProviders:
+      - alias: rhdh
+        config:
+          clientId: {{ .Values.keycloak.clientId }}
+          clientSecret: {{ .Values.keycloak.clientSecret }}
+        providerId: oidc
+        trustEmail: true
+    realm: rhdh
