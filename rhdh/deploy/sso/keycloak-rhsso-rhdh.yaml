@@ -2,7 +2,6 @@
 kind: Keycloak
 metadata:
   name: rhsso-rhdh
-  namespace: rhsso
   labels:
     app: rhsso-rhdh
     app.kubernetes.io/instance: rhsso-rhdh
