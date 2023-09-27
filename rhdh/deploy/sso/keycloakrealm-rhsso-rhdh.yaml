@@ -25,4 +25,3 @@ spec:
           clientSecret: {{ .Values.keycloak.clientSecret }}
         providerId: oidc
         trustEmail: true
-    realm: rhdh
