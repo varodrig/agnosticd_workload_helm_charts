@@ -18,3 +18,8 @@ service:
 
 # name of instances
 name: rhdh
+
+app:
+  baseUrl: ""
+  host: ""
+  cluster: ""

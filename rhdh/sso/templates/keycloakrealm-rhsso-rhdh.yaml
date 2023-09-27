@@ -14,7 +14,7 @@ spec:
       app.kubernetes.io/instance: rhsso-rhdh
       app.kubernetes.io/name: rhsso-rhdh
   realm:
-    id: {{ .Values.keycloak.realm }}
-    realm: {{ .Values.keycloak.realm }}
+    id: {{ $.Values.keycloak.realm }}
+    realm: {{ $.Values.keycloak.realm }}
     enabled: true
-    displayName: {{ .Values.keycloak.displayName }}
+    displayName: {{ $.Values.keycloak.displayName }}
