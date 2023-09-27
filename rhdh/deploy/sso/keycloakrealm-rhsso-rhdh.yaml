@@ -18,10 +18,3 @@ spec:
     realm: {{ .Values.keycloak.realm }}
     enabled: true
     displayName: {{ .Values.keycloak.displayName }}
-    identityProviders:
-      - alias: rhdh
-        config:
-          clientId: {{ .Values.keycloak.clientId }}
-          clientSecret: {{ .Values.keycloak.clientSecret }}
-        providerId: oidc
-        trustEmail: true
