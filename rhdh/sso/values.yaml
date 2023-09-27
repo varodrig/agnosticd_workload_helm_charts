@@ -1,0 +1,20 @@
+keycloak:
+  baseUrl: ""
+  loginRealm: ""
+  realm: ""
+  clientId: ""
+  clientSecret: ""
+  displayName: "rhdh"
+
+oauth2Proxy:
+  issuerUrl:  https://keycloak-"{{ _ocp4_workload_mad_roadshow_namespace }}"."{{ .Values.app.host }}"/auth/realms/rhdh
+  cookieSecret: ""
+  skipTlsVerify: "true"
+
+
+service:
+  type: ClusterIP
+  port: 8080
+
+# name of instances
+name: rhdh
