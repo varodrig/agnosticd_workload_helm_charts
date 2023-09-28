@@ -6,7 +6,7 @@ metadata:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
   labels:
     app: rhsso-rhdh
-    app.kubernetes.io/instance: rhdh-sso
+    app.kubernetes.io/instance: rhsso-rhdh
     app.kubernetes.io/name: rhsso-rhdh
   name: rhsso-rhdh
 spec:
