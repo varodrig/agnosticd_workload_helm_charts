@@ -3,9 +3,7 @@ kind: KeycloakClient
 metadata:
   name: rhdh
   labels:
-    app: rhsso-rhdh
-    app.kubernetes.io/instance: rhsso-rhdh
-    app.kubernetes.io/name: rhsso-rhdh
+{{- include "rhdh.labels" . | nindent 4 }}
 spec:
   client:
     clientAuthenticatorType: client-secret
@@ -22,9 +20,7 @@ spec:
     directAccessGrantsEnabled: true
   realmSelector:
     matchLabels:
-      app: rhsso-rhdh
-      app.kubernetes.io/instance: rhdh-sso
-      app.kubernetes.io/name: rhsso-rhdh
+ {{- include "rhdh.selectorLabels" . | nindent 6 }}
   serviceAccountClientRoles:
     realm-management:
       - query-groups

@@ -3,16 +3,11 @@ kind: KeycloakRealm
 metadata:
   name: rhdh
   labels:
-    app: rhsso-rhdh
-    app.kubernetes.io/instance: rhsso-rhdh
-    app.kubernetes.io/name: rhsso-rhdh
-    rht-gitops.com/openshift-gitops: rhsso-rhdh
+{{- include "rhdh.labels" . | nindent 4 }}
 spec:
   instanceSelector:
     matchLabels:
-      app: rhsso-rhdh
-      app.kubernetes.io/instance: rhdh-sso
-      app.kubernetes.io/name: rhsso-rhdh
+ {{- include "rhdh.selectorLabels" . | nindent 6 }}
   realm:
     id: {{ .Values.keycloak.realm }}
     realm: {{ .Values.keycloak.realm }}
