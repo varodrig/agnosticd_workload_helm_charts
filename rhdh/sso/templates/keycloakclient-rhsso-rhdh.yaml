@@ -23,7 +23,7 @@ spec:
   realmSelector:
     matchLabels:
       app: rhsso-rhdh
-      app.kubernetes.io/instance: rhsso-rhdh
+      app.kubernetes.io/instance: rhdh-sso
       app.kubernetes.io/name: rhsso-rhdh
   serviceAccountClientRoles:
     realm-management:
