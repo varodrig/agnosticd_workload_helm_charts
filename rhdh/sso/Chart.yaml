@@ -1,6 +1,6 @@
 apiVersion: v2
 name: developer-hub
-description: A Helm chart to deploy Red Hat Developer Hub
+description: A Helm chart to setup RHDEVHUB SSO
 
 # A chart can be either an 'application' or a 'library' chart.
 #

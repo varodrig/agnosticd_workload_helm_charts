@@ -9,9 +9,7 @@ metadata:
 spec:
   client:
     clientAuthenticatorType: client-secret
-    redirectUris:
-      - >-
-        https://developer-hub-"{{ _ocp4_workload_mad_roadshow_namespace }}"."{{ .Values.app.host }}"/oauth2/callback
+    redirectUris: https://developer-hub-{{ .Values.namespace }}.{{ .Values.app.host }}/oauth2/callback
     serviceAccountsEnabled: true
     clientId: rhdh
     defaultClientScopes:

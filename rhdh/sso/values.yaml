@@ -5,6 +5,7 @@ keycloak:
   clientId: ""
   clientSecret: ""
   displayName: "rhdh"
+  redirectUrl: ""
 
 oauth2Proxy:
   issuerUrl:  https://keycloak-"{{ _ocp4_workload_mad_roadshow_namespace }}"."{{ .Values.app.host }}"/auth/realms/rhdh
@@ -23,3 +24,5 @@ app:
   baseUrl: ""
   host: ""
   cluster: ""
+
+namespace: ""
