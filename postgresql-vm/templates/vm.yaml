@@ -1,0 +1,73 @@
+---
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  name: {{ include "postgresql-database.fullname" . }}
+  labels:
+    {{- include "postgresql-database.labels" . | nindent 4 }}
+spec:
+  running: true
+  template:
+    metadata:
+      annotations:
+        vm.kubevirt.io/flavor: medium
+        vm.kubevirt.io/os: rhel8
+        vm.kubevirt.io/workload: server
+      labels:
+        kubevirt.io/domain: {{ include "postgresql-database.fullname" . }}
+        kubevirt.io/size: medium
+        {{- include "postgresql-database.labels" . | nindent 8 }}
+    spec:
+      domain:
+        devices:
+          disks:
+          - name: vol-0
+            disk:
+              bus: virtio
+          - name: cloudinitdisk
+            disk:
+              bus: virtio
+          interfaces:
+          - name: default
+            masquerade: {}
+        resources:
+          {{- toYaml .Values.resources | nindent 10 }}
+      networks:
+      - name: default
+        pod: {}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+      - name: vol-0
+        dataVolume:
+          name: {{ include "postgresql-database.fullname" . }}
+      - cloudInitNoCloud:
+          userData: |-
+            #cloud-config
+            user: cloud-user
+            password: openshift
+            chpasswd: { expire: False }
+            ssh_pwauth: true
+        name: cloudinitdisk
+  dataVolumeTemplates:
+  - metadata:
+      name: {{ include "postgresql-database.fullname" . }}
+    spec:
+      pvc:
+        storageClassName: {{ .Values.storage.storageClass }}
+        accessModes:
+        - ReadWriteOnce
+        volumeMode: Block
+        resources:
+          requests:
+            storage: {{ .Values.storage.pvcSize }}
+      source:
+        pvc:
+          namespace: {{ .Values.dataVolumeSource.namespace }}
+          name: {{ .Values.dataVolumeSource.name }}
