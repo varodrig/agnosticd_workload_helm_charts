@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ArgoCD
 metadata:
-  name: argocd-devhub
+  name: "{{ _ocp4_workload_gitops_workshop_argo_instance_name }}"
 spec:
   server:
     resources:
