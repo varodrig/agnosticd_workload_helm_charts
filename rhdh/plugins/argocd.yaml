@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ArgoCD
 metadata:
-  name: "{{ _ocp4_workload_mad_roadshow_argo_instance_name }}"
+  name: "argocd-devhub"
 spec:
   server:
     resources:
