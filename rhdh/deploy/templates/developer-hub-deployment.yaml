@@ -27,7 +27,7 @@ spec:
           configMap:
             name: backstage-app-config
       imagePullSecrets:
-        - name: rhdh-pull-secret
+        - name: redhat-gpte-mad-devhub-pull-secret
       containers:
         - name: backstage-backend
           image: quay.io/rhdh/developer-hub-rhel9:1.0-8

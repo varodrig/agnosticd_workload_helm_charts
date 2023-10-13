@@ -1,4 +1,4 @@
-pullSecret: xxx
+pullSecret: ""
 namespace: ""
 app:
   baseUrl: ""
