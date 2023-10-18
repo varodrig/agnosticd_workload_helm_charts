@@ -100,26 +100,23 @@ spec:
           env:
             - name: OAUTH2_PROXY_CLIENT_ID
               valueFrom:
-              secretKeyRef:
-                name: rhdh-keycloak-creds
-                key: oauth2Proxy.clientId
+                secretKeyRef:
+                  name: rhdh-keycloak-creds
+                  key: rhsso.clientId
             - name: OAUTH2_PROXY_CLIENT_SECRET
               valueFrom:
-              secretKeyRef:
-                name: rhdh-keycloak-creds
-                key: rhsso.clientSecret
+                secretKeyRef:
+                  name: rhdh-keycloak-creds
+                  key: rhsso.clientSecret
             - name: OAUTH2_PROXY_OIDC_ISSUER_URL
               value: {{ $.Values.oauth2Proxy.issuerUrl }}
             - name: OAUTH2_PROXY_COOKIE_SECRET
               valueFrom:
-              secretKeyRef:
-                name: rhdh-keycloak-creds
-                key: oauth2Proxy.cookieSecret
+                secretKeyRef:
+                  name: rhdh-keycloak-creds
+                  key: oauth2Proxy.cookieSecret
             - name: OAUTH2_PROXY_SSL_INSECURE_SKIP_VERIFY
-              valueFrom:
-              secretKeyRef:
-                name: rhdh-keycloak-creds
-                key: rhsso.cookieSecret
+              value: {{ $.Values.oauth2Proxy.skipTlsVerify }}
           ports:
           - containerPort: {{ .Values.oauth2Proxy.port }}
             name: oauth2-proxy

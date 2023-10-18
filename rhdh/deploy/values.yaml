@@ -33,7 +33,7 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
 
 oauth2Proxy:
-  issuerUrl:  https://keycloak-"{{ _ocp4_workload_mad_roadshow_namespace }}"."{{ .Values.app.host }}"/auth/realms/rhdh
+  issuerUrl: ""
   cookieSecret: ""
   clientId: ""
   clientSecret: ""
