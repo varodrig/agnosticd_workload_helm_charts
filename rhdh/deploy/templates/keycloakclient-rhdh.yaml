@@ -11,7 +11,7 @@ spec:
     clientAuthenticatorType: client-secret
     redirectUris:
       - >-
-        {{ $.Values.oauth2Proxy.baseUrl}}/oauth2/callback
+       https://{{ .Values.app.baseUrl }}/oauth2/callback
     serviceAccountsEnabled: true
     clientId: rhdh
     defaultClientScopes:
