@@ -87,11 +87,6 @@ spec:
             - name: backstage-app-config
               mountPath: "/app/app-config-from-configmap.yaml"
               subPath: app-config.yaml
-          envFrom:
-            - secretRef:
-                name: keycloak-secrets
-            - secretRef:
-                name: keycloak-client-secret-rhdh
         - args:
           - '--provider=oidc'
           - '--email-domain=*'
