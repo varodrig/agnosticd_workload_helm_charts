@@ -71,7 +71,7 @@ data:
               timeout: { seconds: 60 }
         keycloakOrg:
           default:
-            baseUrl: "https://keycloak-rhsso.{{ $.Values.app.host }}/auth"
+            baseUrl: "https://keycloak-rhsso.{{ $.Values.oauth2Proxy.baseUrl }}/auth"
             loginRealm: {{ $.Values.oauth2Proxy.realm }}
             realm: {{ $.Values.oauth2Proxy.realm }}
             clientId: {{ $.Values.oauth2Proxy.clientId }}
