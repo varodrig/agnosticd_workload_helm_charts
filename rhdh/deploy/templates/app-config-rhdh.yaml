@@ -69,6 +69,13 @@ data:
               frequency: { seconds: 10 }
               # supports ISO duration, "human duration" as used in code
               timeout: { seconds: 60 }
+        keycloakOrg:
+          default:
+            baseUrl: {{ $.Values.oauth2Proxy.baseUrl }}
+            loginRealm: {{ $.Values.oauth2Proxy.realm }}
+            realm: {{ $.Values.oauth2Proxy.realm }}
+            clientId: {{ $.Values.oauth2Proxy.clientId }}
+            clientSecret: {{ $.Values.oauth2Proxy.clientSecret }}
 
 {{- end }}
 
