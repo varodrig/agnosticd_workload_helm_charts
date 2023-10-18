@@ -109,14 +109,14 @@ spec:
                   name: rhdh-keycloak-creds
                   key: rhsso.clientSecret
             - name: OAUTH2_PROXY_OIDC_ISSUER_URL
-              value: {{ $.Values.oauth2Proxy.issuerUrl }}
+              value: {{ .Values.oauth2Proxy.issuerUrl }}
             - name: OAUTH2_PROXY_COOKIE_SECRET
               valueFrom:
                 secretKeyRef:
                   name: rhdh-keycloak-creds
                   key: oauth2Proxy.cookieSecret
             - name: OAUTH2_PROXY_SSL_INSECURE_SKIP_VERIFY
-              value: {{ $.Values.oauth2Proxy.skipTlsVerify }}
+              value: {{ .Values.oauth2Proxy.skipTlsVerify }}
           ports:
           - containerPort: {{ .Values.oauth2Proxy.port }}
             name: oauth2-proxy
