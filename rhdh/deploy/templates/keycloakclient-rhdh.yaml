@@ -1,0 +1,34 @@
+﻿apiVersion: keycloak.org/v1alpha1
+kind: KeycloakClient
+metadata:
+  name: rhdh
+  labels:
+    app: rhsso-rhdh
+    app.kubernetes.io/instance: rhsso-rhdh
+    app.kubernetes.io/name: rhsso-rhdh
+spec:
+  client:
+    clientAuthenticatorType: client-secret
+    redirectUris:
+      - >-
+        {{ $.Values.oauth2Proxy.baseUrl}}/oauth2/callback
+    serviceAccountsEnabled: true
+    clientId: rhdh
+    defaultClientScopes:
+      - profile
+      - email
+      - roles
+    implicitFlowEnabled: false
+    standardFlowEnabled: true
+    consentRequired: false
+    directAccessGrantsEnabled: true
+  realmSelector:
+    matchLabels:
+      app: rhsso-rhdh
+      app.kubernetes.io/instance: rhsso-rhdh
+      app.kubernetes.io/name: rhsso-rhdh
+  serviceAccountClientRoles:
+    realm-management:
+      - query-groups
+      - query-users
+      - view-users

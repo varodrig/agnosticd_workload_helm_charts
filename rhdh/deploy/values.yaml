@@ -32,18 +32,13 @@ serviceAccount:
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
 
-keycloak:
-  baseUrl: ""
-  loginRealm: ""
-  realm: ""
-  clientId: ""
-  clientSecret: ""
-  displayName: "rhdh"
-
 oauth2Proxy:
   issuerUrl:  https://keycloak-"{{ _ocp4_workload_mad_roadshow_namespace }}"."{{ .Values.app.host }}"/auth/realms/rhdh
   cookieSecret: ""
+  clientId: ""
+  clientSecret: ""
   skipTlsVerify: "true"
+  baseUrl: ""
 
 
 service:
