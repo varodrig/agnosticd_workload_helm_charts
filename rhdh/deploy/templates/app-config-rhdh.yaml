@@ -13,8 +13,8 @@ data:
           instances:
 {{- range $item1 := $item.instances }}
             - name: {{ $item1.name }}
-              username: ${ARGOCD_USERNAME}
-              password: ${ARGOCD_PASSWORD}
+              url: {{ $item1.name.url }}
+              token: {{ $item1.token }}
 {{- end }}
 {{- end }}
 
@@ -71,7 +71,7 @@ data:
               timeout: { seconds: 60 }
         keycloakOrg:
           default:
-            baseUrl: "https://keycloak-rhsso.{{ $.Values.app.sso.host }}/auth"
+            baseUrl: "https://keycloak-rhsso.{{ $.Values.app.host }}/auth"
             loginRealm: {{ $.Values.oauth2Proxy.realm }}
             realm: {{ $.Values.oauth2Proxy.realm }}
             clientId: {{ $.Values.oauth2Proxy.clientId }}
