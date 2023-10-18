@@ -34,7 +34,6 @@ serviceAccount:
 
 oauth2Proxy:
   issuerUrl:  https://keycloak-"{{ _ocp4_workload_mad_roadshow_namespace }}"."{{ .Values.app.host }}"/auth/realms/rhdh
-  baseUrl: https://keycloak-"{{ _ocp4_workload_mad_roadshow_namespace }}"."{{ .Values.app.host }}"/auth
   cookieSecret: ""
   clientId: ""
   clientSecret: ""
