@@ -28,3 +28,5 @@ dataVolumeSource:
 nodeSelector: {}
 
 tolerations: []
+
+staticIP: "10.10.10.30/24"
