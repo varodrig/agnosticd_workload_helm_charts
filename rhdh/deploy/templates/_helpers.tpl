@@ -61,7 +61,7 @@ Create the name of the service account to use
 */}}
 {{- define "rhdh.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default "default" 
+{{- default "default"  }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
