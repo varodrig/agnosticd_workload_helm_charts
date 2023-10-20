@@ -8,7 +8,7 @@ spec:
     name: developer-hub
     weight: 100
   port:
-    targetPort: http
+    targetPort: http-backend
   tls:
     termination: edge
     insecureEdgeTerminationPolicy: Redirect

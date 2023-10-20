@@ -28,74 +28,70 @@ spec:
             name: backstage-app-config
       imagePullSecrets:
         - name: rhdh-pull-secret
-      containers:
-        - name: backstage-backend
-          image: quay.io/rhdh/developer-hub-rhel9:1.0-8
-          imagePullPolicy: "Always"
+        containers:
+        - resources: {}
+          terminationMessagePath: /dev/termination-log
+          name: backstage-backend
           command:
             - node
             - packages/backend
-          args:
-            - "--config"
-            - "app-config.yaml"
-            - "--config"
-            - "app-config.example.yaml"
-            - "--config"
-            - "app-config.example.production.yaml"
-            - "--config"
-            - "/app/app-config-rhdh.yaml"
-            - "--config"
-            - "/app/app-config-rhdh.yaml"
-            - "--config"
-            - "/app/app-config-from-configmap.yaml"
           env:
             - name: APP_CONFIG_backend_listen_port
-              value: "7007"
+              value: '7007'
             - name: POSTGRES_HOST
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "rhdh.fullname" . }}-postgresql
-                  key: databaseHost 
+                  name: developer-hub-postgresql
+                  key: databaseHost
             - name: POSTGRES_PORT
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "rhdh.fullname" . }}-postgresql
+                  name: developer-hub-postgresql
                   key: databasePort
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "rhdh.fullname" . }}-postgresql
+                  name: developer-hub-postgresql
                   key: databaseUser
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "rhdh.postgresql.name" . }}
+                  name: developer-hub-postgresql
                   key: databasePassword
             - name: POSTGRESQL_ADMIN_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "rhdh.postgresql.name" . }}
+                  name: developer-hub-postgresql
                   key: databaseAdminPassword
           ports:
             - name: backend
               containerPort: 7007
               protocol: TCP
+          imagePullPolicy: Always
           volumeMounts:
             - name: app-config-rhdh
-              mountPath: "/app/app-config-rhdh.yaml"
+              mountPath: /app/app-config-rhdh.yaml
               subPath: app-config-rhdh.yaml
             - name: backstage-app-config
-              mountPath: "/app/app-config-from-configmap.yaml"
+              mountPath: /app/app-config-from-configmap.yaml
               subPath: app-config.yaml
-        - args:
-          - '--provider=oidc'
-          - '--email-domain=*'
-          - '--upstream=http://localhost:7007'
-          - '--http-address=0.0.0.0:4180'
-          - '--skip-provider-button'
-          - '--insecure-oidc-allow-unverified-email=true'
-          image: registry.redhat.io/openshift4/ose-oauth-proxy:v4.12
-          imagePullPolicy: IfNotPresent
+          terminationMessagePolicy: File
+          image: 'quay.io/rhdh/developer-hub-rhel9:1.0-8'
+          args:
+            - '--config'
+            - app-config.yaml
+            - '--config'
+            - app-config.example.yaml
+            - '--config'
+            - app-config.example.production.yaml
+            - '--config'
+            - /app/app-config-rhdh.yaml
+            - '--config'
+            - /app/app-config-rhdh.yaml
+            - '--config'
+            - /app/app-config-from-configmap.yaml
+        - resources: {}
+          terminationMessagePath: /dev/termination-log
           name: oauth2-proxy
           env:
             - name: OAUTH2_PROXY_CLIENT_ID
@@ -118,6 +114,27 @@ spec:
             - name: OAUTH2_PROXY_SSL_INSECURE_SKIP_VERIFY
               value: "{{ .Values.oauth2Proxy.skipTlsVerify }}"
           ports:
-          - containerPort: {{ .Values.oauth2Proxy.port }}
-            name: oauth2-proxy
-            protocol: TCP
+            - name: oauth2-proxy
+              containerPort: 4180
+              protocol: TCP
+          imagePullPolicy: IfNotPresent
+          terminationMessagePolicy: File
+          image: 'quay.io/oauth2-proxy/oauth2-proxy:latest'
+          args:
+            - '--provider=oidc'
+            - '--email-domain=*'
+            - '--upstream=http://localhost:7007'
+            - '--http-address=0.0.0.0:4180'
+            - '--skip-provider-button'
+            - '--insecure-oidc-allow-unverified-email=true'
+      serviceAccount: default
+      volumes:
+        - name: app-config-rhdh
+          configMap:
+            name: app-config-rhdh
+            defaultMode: 420
+        - name: backstage-app-config
+          configMap:
+            name: backstage-app-config
+            defaultMode: 420
+      dnsPolicy: ClusterFirst
