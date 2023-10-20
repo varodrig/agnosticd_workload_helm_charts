@@ -29,4 +29,5 @@ nodeSelector: {}
 
 tolerations: []
 
-staticIP: "10.10.10.30/24"
+staticIP: ""
+# staticIP: "10.10.10.30/24"

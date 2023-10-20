@@ -30,16 +30,20 @@ spec:
           interfaces:
           - name: default
             masquerade: {}
+          {{- if .Values.staticIP }}
           - bridge: {}
             name: nic-secondary
+          {{- end }}
         resources:
           {{- toYaml .Values.resources | nindent 10 }}
       networks:
       - name: default
         pod: {}
+        {{- if .Values.staticIP }}
       - multus:
           networkName: {{ .Release.Namespace }}/postgresql-net
         name: nic-secondary
+      {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -53,12 +57,17 @@ spec:
         dataVolume:
           name: {{ include "postgresql-database.fullname" . }}
       - cloudInitNoCloud:
+          {{- if .Values.staticIP }}
           networkData: |
-            version: 2
-            ethernets:
-              eth1:
-                dhcp4: false
-                addresses: [ {{ .Values.staticIP }} ]
+            network:
+              version: 1
+              config:
+              - type: physical
+                name: eth1
+                subnets:
+                  - type: static
+                    address: {{ .Values.staticIP }}
+          {{- end }}
           userData: |-
             #cloud-config
             user: cloud-user

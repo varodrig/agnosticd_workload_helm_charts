@@ -1,3 +1,4 @@
+{{- if .Values.staticIP }}
 ---
 apiVersion: k8s.cni.cncf.io/v1
 kind: NetworkAttachmentDefinition
@@ -8,3 +9,4 @@ spec:
     {"cniVersion":"0.3.1","type":"ovn-k8s-cni-overlay","topology":"layer2","name":
     "postgresql-net", "netAttachDefName":
     "{{ .Release.Namespace }}/postgresql-net"}
+{{- end }}
