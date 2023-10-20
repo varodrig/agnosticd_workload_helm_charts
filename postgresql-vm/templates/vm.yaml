@@ -59,14 +59,11 @@ spec:
       - cloudInitNoCloud:
           {{- if .Values.staticIP }}
           networkData: |
-            network:
-              version: 1
-              config:
-              - type: physical
-                name: eth1
-                subnets:
-                  - type: static
-                    address: {{ .Values.staticIP }}
+            version: 2
+            ethernets:
+              eth1:
+                dhcp4: false
+                addresses: [ {{ .Values.staticIP }} ]
           {{- end }}
           userData: |-
             #cloud-config
