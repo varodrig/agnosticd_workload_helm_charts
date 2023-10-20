@@ -28,7 +28,7 @@ spec:
             name: backstage-app-config
       imagePullSecrets:
         - name: rhdh-pull-secret
-        containers:
+      containers:
         - resources: {}
           terminationMessagePath: /dev/termination-log
           name: backstage-backend
