@@ -57,20 +57,17 @@ spec:
         dataVolume:
           name: {{ include "postgresql-database.fullname" . }}
       - cloudInitNoCloud:
-          {{- if .Values.staticIP }}
-          networkData: |
-            version: 2
-            ethernets:
-              eth1:
-                dhcp4: false
-                addresses: [ {{ .Values.staticIP }} ]
-          {{- end }}
           userData: |-
             #cloud-config
             user: cloud-user
             password: openshift
             chpasswd: { expire: False }
             ssh_pwauth: true
+            {{- if .Values.staticIP }}
+            bootcmd:
+            - nmcli connection modify "Wired connection 2" ipv4.addresses 10.10.10.30/24 ipv4.method manual
+            - nmcli dev reapply eth1
+            {{- end }}
         name: cloudinitdisk
   dataVolumeTemplates:
   - metadata:
