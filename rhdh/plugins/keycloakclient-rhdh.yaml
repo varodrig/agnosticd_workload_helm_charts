@@ -12,7 +12,7 @@ spec:
     clientAuthenticatorType: client-secret
     redirectUris:
       - >-
-       https://{{ .Values.app.baseUrl }}/oauth2/callback
+       https://{{ ocp4_workload_mad_roadshow_rhdh_app_name }}-{{ _ocp4_workload_mad_roadshow_namespace }}.{{ ocp4_workload_redhat_developer_hub_apps_domain }}/oauth2/callback
     serviceAccountsEnabled: true
     clientId: rhdh
     defaultClientScopes:
