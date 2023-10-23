@@ -89,3 +89,4 @@ argocd:
         - name: main
           url: 	""
           token:
+          username:

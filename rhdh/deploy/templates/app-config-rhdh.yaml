@@ -14,7 +14,8 @@ data:
 {{- range $item1 := $item.instances }}
             - name: {{ $item1.name }}
               url: {{ $item1.url }}
-              token: {{ $item1.token }}
+              password: {{ $item1.token }}
+              username: {{ $item1.username }}
 {{- end }}
 {{- end }}
 
