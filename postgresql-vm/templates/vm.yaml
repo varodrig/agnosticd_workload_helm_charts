@@ -65,7 +65,7 @@ spec:
             ssh_pwauth: true
             {{- if .Values.staticIP }}
             bootcmd:
-            - nmcli connection modify "Wired connection 2" ipv4.addresses 10.10.10.30/24 ipv4.method manual
+            - nmcli connection modify "Wired connection 1" ipv4.addresses 10.10.10.30/24 ipv4.method manual
             - nmcli dev reapply eth1
             {{- end }}
         name: cloudinitdisk
