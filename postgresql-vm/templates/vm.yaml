@@ -41,7 +41,7 @@ spec:
         pod: {}
         {{- if .Values.staticIP }}
       - multus:
-          networkName: {{ .Release.Namespace }}/postgresql-net
+          networkName: default/postgresql-net
         name: nic-secondary
       {{- end }}
       {{- with .Values.nodeSelector }}
