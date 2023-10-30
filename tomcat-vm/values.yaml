@@ -1,0 +1,33 @@
+# Default values for tomcat-vm
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+nameOverride: ""
+fullnameOverride: ""
+
+namespacePermissions:
+  # Which OpenShift user gets permissions for the namespace
+  user: kubeadmin
+  # Which role to grant the user on the namespace
+  role: admin
+
+resources:
+  requests:
+    memory: 4Gi
+    cpu: 2
+
+storage:
+  pvcSize: 40Gi
+  storageClass: gp3-csi
+
+dataVolumeSource:
+  namespace: vmimages
+  name: tomcat
+  clusterRole: datavolume-cloner
+
+nodeSelector: {}
+
+tolerations: []
+
+staticIP: ""
+# staticIP: "10.10.10.31/24"

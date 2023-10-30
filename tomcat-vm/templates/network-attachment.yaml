@@ -1,0 +1,13 @@
+{{- if .Values.staticIP }}
+---
+apiVersion: k8s.cni.cncf.io/v1
+kind: NetworkAttachmentDefinition
+metadata:
+  name: tomcat-net
+  namespace: default
+spec:
+  config: >-
+    {"cniVersion":"0.3.1","type":"ovn-k8s-cni-overlay","topology":"layer2","name":
+    "tomcat-net", "netAttachDefName":
+    "default/tomcat-net"}
+{{- end }}

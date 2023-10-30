@@ -2,9 +2,9 @@
 apiVersion: kubevirt.io/v1
 kind: VirtualMachine
 metadata:
-  name: {{ include "postgresql-database.fullname" . }}
+  name: {{ include "tomcat.fullname" . }}
   labels:
-    {{- include "postgresql-database.labels" . | nindent 4 }}
+    {{- include "tomcat.labels" . | nindent 4 }}
 spec:
   running: true
   template:
@@ -14,9 +14,9 @@ spec:
         vm.kubevirt.io/os: rhel8
         vm.kubevirt.io/workload: server
       labels:
-        kubevirt.io/domain: {{ include "postgresql-database.fullname" . }}
+        kubevirt.io/domain: {{ include "tomcat.fullname" . }}
         kubevirt.io/size: medium
-        {{- include "postgresql-database.labels" . | nindent 8 }}
+        {{- include "tomcat.labels" . | nindent 8 }}
     spec:
       domain:
         devices:
@@ -41,7 +41,7 @@ spec:
         pod: {}
         {{- if .Values.staticIP }}
       - multus:
-          networkName: default/postgresql-net
+          networkName: default/tomcat-net
         name: nic-secondary
       {{- end }}
       {{- with .Values.nodeSelector }}
@@ -55,7 +55,7 @@ spec:
       volumes:
       - name: vol-0
         dataVolume:
-          name: {{ include "postgresql-database.fullname" . }}
+          name: {{ include "tomcat.fullname" . }}
       - cloudInitNoCloud:
           userData: |-
             #cloud-config
@@ -71,7 +71,7 @@ spec:
         name: cloudinitdisk
   dataVolumeTemplates:
   - metadata:
-      name: {{ include "postgresql-database.fullname" . }}
+      name: {{ include "tomcat.fullname" . }}
     spec:
       pvc:
         storageClassName: {{ .Values.storage.storageClass }}

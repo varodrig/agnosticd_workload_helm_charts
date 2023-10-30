@@ -1,6 +1,6 @@
 apiVersion: v2
-name: postgresql-vm
-description: A Helm to deploy a PostgreSQL Database Kubevirt VM
+name: tomcat-vm
+description: A Helm to deploy a Tomcat Kubevirt VM
 
 # A chart can be either an 'application' or a 'library' chart.
 #
