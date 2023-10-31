@@ -18,12 +18,9 @@ resources:
 
 storage:
   pvcSize: 40Gi
-  storageClass: gp3-csi
 
-dataVolumeSource:
-  namespace: vmimages
-  name: tomcat
-  clusterRole: datavolume-cloner
+image:
+  url: https://gpte-public.s3.amazonaws.com/ama_demo/tomcat-mad.qcow2
 
 nodeSelector: {}
 
