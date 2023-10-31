@@ -44,6 +44,20 @@ spec:
           networkName: default/tomcat-net
         name: nic-secondary
       {{- end }}
+      livenessProbe:
+        httpGet:
+          path: /health/live
+          port: 8080
+        initialDelaySeconds: 60
+        periodSeconds: 30
+        timeoutSeconds: 10
+      readinessProbe:
+        httpGet:
+          path: /health/ready
+          port: 8080
+        initialDelaySeconds: 60
+        periodSeconds: 30
+        timeoutSeconds: 10
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -65,7 +79,7 @@ spec:
             ssh_pwauth: true
             {{- if .Values.staticIP }}
             bootcmd:
-            - nmcli connection modify "Wired connection 1" ipv4.addresses {{ .Values.staticIP }} ipv4.method manual
+            - nmcli connection modify "Wired connection 2" ipv4.addresses {{ .Values.staticIP }} ipv4.method manual
             - nmcli dev reapply eth1
             {{- end }}
         name: cloudinitdisk
