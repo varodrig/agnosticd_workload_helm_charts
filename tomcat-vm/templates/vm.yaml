@@ -73,15 +73,10 @@ spec:
   - metadata:
       name: {{ include "tomcat.fullname" . }}
     spec:
-      pvc:
-        storageClassName: {{ .Values.storage.storageClass }}
-        accessModes:
-        - ReadWriteOnce
-        volumeMode: Block
+      source:
+        http:
+          url: {{ .Values.image.url }}
+      storage:
         resources:
           requests:
             storage: {{ .Values.storage.pvcSize }}
-      source:
-        pvc:
-          namespace: {{ .Values.dataVolumeSource.namespace }}
-          name: {{ .Values.dataVolumeSource.name }}
