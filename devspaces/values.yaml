@@ -2,3 +2,6 @@ oauth:
   clientId: ''
   clientSecret: ''
   provider: ''
+
+operatorChannel: stable
+operatorVersion: 3.9.1
