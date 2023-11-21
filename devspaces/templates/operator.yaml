@@ -6,7 +6,8 @@ metadata:
   annotations:
     "helm.sh/hook-weight": "-5"
 spec:
-  channel: stable
+  channel: {{ .Values.operatorChannel }}
+  version: {{ .Values.operatorVersion }}3.9.1
   installPlanApproval: Automatic
   name: devspaces
   source: redhat-operators
