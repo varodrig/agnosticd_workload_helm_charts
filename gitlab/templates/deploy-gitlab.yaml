@@ -36,8 +36,6 @@ spec:
           requests:
             cpu: "2"
             memory: 4Gi
-        securityContext:
-          privileged: true
         volumeMounts:
         - mountPath: /home/git/data
           name: gitlab-persistent-storage

@@ -34,8 +34,6 @@ spec:
             - redis-cli
             - ping
           initialDelaySeconds: 5
-        securityContext:
-          privileged: true
         volumeMounts:
         - mountPath: /var/lib/redis
           name: data
