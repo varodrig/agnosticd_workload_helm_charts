@@ -54,6 +54,8 @@ spec:
             - -U
             - postgres
           initialDelaySeconds: 5
+        securityContext:
+          privileged: true
         volumeMounts:
         - mountPath: /var/lib/postgresql
           name: data
