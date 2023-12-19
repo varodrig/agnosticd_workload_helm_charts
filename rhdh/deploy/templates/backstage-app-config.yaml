@@ -1,0 +1,22 @@
+# Source: developer-hub/charts/upstream/templates/app-config-configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backstage-app-config
+data:
+  app-config.yaml: |
+    app:
+      baseUrl: {{ .Values.app.baseUrl }}
+    backend:
+      baseUrl: {{ .Values.app.baseUrl }}
+      cors:
+        credentials: true
+        origin: {{ .Values.app.baseUrl }}
+      database:
+        connection:
+          password: "{{ .Values.postgresql.databaseAdminPassword }}"
+          user: "{{ .Values.postgresql.databaseAdminUser }}"
+      reading:
+        allow:
+        - host: "{{ .Values.app.cluster }}"
+

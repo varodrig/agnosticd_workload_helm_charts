@@ -1,0 +1,128 @@
+# Source: developer-hub/charts/upstream/charts/postgresql/templates/primary/statefulset.yaml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: developer-hub-postgresql
+  labels:
+    {{- include "rhdh.postgresql.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  serviceName: developer-hub-postgresql-hl
+  updateStrategy:
+    rollingUpdate: {}
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      {{- include "rhdh.postgresql.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      name: developer-hub-postgresql
+      labels:
+        {{- include "rhdh.postgresql.selectorLabels" . | nindent 8 }}
+    spec:
+      containers: 
+      - env:
+        - name: BITNAMI_DEBUG
+          value: "false"
+        - name: POSTGRES_PORT_NUMBER
+          valueFrom:
+            secretKeyRef:
+              name: {{ include "rhdh.fullname" . }}-postgresql
+              key: databasePort
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: {{ include "rhdh.fullname" . }}-postgresql
+              key: databaseUser
+        - name: POSTGRESQL_VOLUME_DIR
+          value: "/var/lib/pgsql/data"
+        - name: PGDATA
+          value: "/var/lib/pgsql/data/userdata"
+          # Authentication
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ include "rhdh.postgresql.name" . }}
+              key: databasePassword
+        - name: POSTGRES_POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ include "rhdh.postgresql.name" . }}
+              key: databaseAdminPassword 
+          # Replication
+          # Initdb
+          # Standby
+          # LDAP
+        - name: POSTGRESQL_ENABLE_LDAP
+          value: "no"
+        # TLS
+        - name: POSTGRESQL_ENABLE_TLS
+          value: "no"
+        # Audit
+        - name: POSTGRESQL_LOG_HOSTNAME
+          value: "false"
+        - name: POSTGRESQL_LOG_CONNECTIONS
+          value: "false"
+        - name: POSTGRESQL_LOG_DISCONNECTIONS
+          value: "false"
+        - name: POSTGRESQL_PGAUDIT_LOG_CATALOG
+          value: "off"
+        # Others
+        - name: POSTGRESQL_CLIENT_MIN_MESSAGES
+          value: "error"
+        - name: POSTGRESQL_SHARED_PRELOAD_LIBRARIES
+          value: "pgaudit"
+        - name: POSTGRESQL_ADMIN_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ include "rhdh.postgresql.name" . }}
+              key: databaseAdminPassword
+        name: postgresql
+        image: registry.redhat.io/rhel9/postgresql-15:latest
+        imagePullPolicy: "IfNotPresent"
+        ports:
+          - name: tcp-postgresql
+            containerPort: 5432
+        livenessProbe:
+          failureThreshold: 6
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 5
+          exec:
+            command:
+              - /bin/sh
+              - -c
+              - exec pg_isready -U "bn_backstage" -h 127.0.0.1 -p 5432
+        readinessProbe:
+          failureThreshold: 6
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 5
+          exec:
+            command:
+              - /bin/sh
+              - -c
+              - -e
+
+              - |
+                exec pg_isready -U "bn_backstage" -h 127.0.0.1 -p 5432
+        resources:
+          limits: {}
+          requests:
+            cpu: 250m
+            memory: 256Mi
+  {{- if .Values.postgresql.storage.enabled }}
+        volumeMounts:
+          - name: postgresdb
+            mountPath: /var/lib/postgresql/data
+                
+  {{- end }}
+      serviceAccount: {{ include "rhdh.serviceAccountName" . }}
+  {{- if .Values.postgresql.storage.enabled }}
+      volumes:
+        - name: postgresdb
+          persistentVolumeClaim:
+            claimName: {{ include "rhdh.postgresql.name" . }}
+  {{- end }}
