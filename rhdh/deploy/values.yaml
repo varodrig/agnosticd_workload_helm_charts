@@ -1,4 +1,5 @@
-pullSecret: ""
+pullSecrets:
+  - mad-developer-hub-pull-secret
 namespace: ""
 app:
   baseUrl: ""
