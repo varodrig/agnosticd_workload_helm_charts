@@ -27,7 +27,7 @@ spec:
           configMap:
             name: backstage-app-config
       imagePullSecrets:
-        - name: mad_developer_hub_pull_secret
+        - name: mad-developer-hub-pull-secret
       containers:
         - resources: {}
           terminationMessagePath: /dev/termination-log
