@@ -111,7 +111,7 @@ data:
         '/developer-hub':
         changeOrigin: true
         pathRewrite:
-          '^/api/proxy/developer-hub': /varodrig/agnosticd_workload_helm_charts/main/rhdh/config/templates/rhdh_home.json
+          '^/api/proxy/developer-hub': /varodrig/agnosticd_workload_helm_charts/main/rhdh/config/rhdh_home.json
         secure: false
         target: https://raw.githubusercontent.com/
      
