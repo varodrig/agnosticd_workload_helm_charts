@@ -105,6 +105,15 @@ data:
       ocm: true
       gitlab: true
       keycloak: true
+
+    proxy:
+      endpoints:
+        '/developer-hub':
+        changeOrigin: true
+        pathRewrite:
+          '^/api/proxy/developer-hub': /varodrig/agnosticd_workload_helm_charts/main/rhdh/deploy/templates/rhdh_home.json
+        secure: false
+        target: https://raw.githubusercontent.com/
      
 
  
