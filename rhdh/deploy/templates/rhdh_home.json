@@ -94,7 +94,7 @@
         {
           "iconUrl": "/homepage/icons/keycloak.svg",
           "label": "Red Hat Single Sign On",
-          "url": "https://keycloak-rhsso.{{ $.Values.oauth2Proxy.baseUrl }}/"
+          "url": ""
         }
       ]
     }
