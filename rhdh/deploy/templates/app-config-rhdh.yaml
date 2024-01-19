@@ -107,13 +107,13 @@ data:
       keycloak: true
 
     proxy:
-      endpoints:
-        '/developer-hub':
-        changeOrigin: true
-        pathRewrite:
-          '^/api/proxy/developer-hub': /varodrig/agnosticd_workload_helm_charts/main/rhdh/config/rhdh_home.json
-        secure: false
+      '/developer-hub':
         target: https://raw.githubusercontent.com/
+        pathRewrite:
+          '^/api/proxy/developer-hub': /varodrig/agnosticd_workload_helm_charts/main/rhdh/json/rhdh_home.json
+        secure: false
+        changeOrigin: true
+
      
 
  

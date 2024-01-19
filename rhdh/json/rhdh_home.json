@@ -56,12 +56,12 @@
       "isExpanded": true,
       "links": [
         {
-          "iconUrl": "/homepage/icons/openshift.png",
+          "iconUrl": "/homepage/icons/icons8/openshift.png",
           "label": "OpenShift GitOps",
           "url": ""
         },
         {
-          "iconUrl": "/homepage/icons/openshift.png",
+          "iconUrl": "/homepage/icons/icons8/openshift.png",
           "label": "OpenShit Pipelines",
           "url": ""
         },
