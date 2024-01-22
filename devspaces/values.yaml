@@ -11,7 +11,7 @@ namespacePermissions:
   # Which role to grant the user on the namespace
   role: admin
 
-# Deploy MTA Operator
+# Deploy RH OpenShiftDevSpaces Operator
 deployOperator: true
 operatorChannel: stable
 
