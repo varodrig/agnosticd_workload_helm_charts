@@ -105,6 +105,15 @@ data:
       ocm: true
       gitlab: true
       keycloak: true
+
+    proxy:
+      '/developer-hub':
+        target: https://raw.githubusercontent.com/
+        pathRewrite:
+          '^/api/proxy/developer-hub': /redhat-gpte-devopsautomation/agnosticd_workload_helm_charts/main/rhdh/json/rhdh_home.json
+        secure: false
+        changeOrigin: true
+
      
 
  

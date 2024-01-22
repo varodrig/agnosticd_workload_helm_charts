@@ -71,4 +71,5 @@ spec:
       clusters:
       - '*'
       kinds:
-      - TaskRun       
+      - TaskRun
+      - PipelineRun       
