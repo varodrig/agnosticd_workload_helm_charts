@@ -84,7 +84,7 @@
         {
           "iconUrl": "/homepage/icons/icons8/openshift.png",
           "label": "OpenShift for Developers",
-          "url": "https://developers.redhat.com/products/openshift/overview"
+          "url": ""
         }
       ]
     },
@@ -93,7 +93,7 @@
       "links": [
         {
           "iconUrl": "/homepage/icons/keycloak.svg",
-          "label": "Red Hat Single Sign On",
+          "label": "Keycloak",
           "url": ""
         }
       ]
