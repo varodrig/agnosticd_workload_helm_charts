@@ -58,13 +58,9 @@ spec:
         cpu: 250m
         memory: 128Mi
   controller:
-    resources:
-      limits:
-        cpu: 2000m
-        memory: 2048Mi
-      requests:
-        cpu: 250m
-        memory: 1024Mi
+    appSync: 3m
+    processors: {}
+    resources: {}
   resourceExclusions: |
     - apiGroups:
       - tekton.dev
