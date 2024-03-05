@@ -4,6 +4,11 @@ metadata:
   name: app-config
 data:
   app-config.yaml: |
+    global:
+        clusterRouterBase: {{ $.Values.backend.baseUrl}}
+        auth:
+            backend:
+            enabled: true
     app:
        # Configurations define above
     argocd:
