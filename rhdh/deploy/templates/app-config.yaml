@@ -5,9 +5,9 @@ metadata:
 data:
   app-config.yaml: |
     global:
-        clusterRouterBase: {{ $.Values.backend.baseUrl}}
+      clusterRouterBase: {{ $.Values.backend.baseUrl}}
         auth:
-            backend:
+          backend:
             enabled: true
     app:
        # Configurations define above
