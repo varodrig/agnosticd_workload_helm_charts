@@ -132,17 +132,17 @@ upstream:
  
     appConfig:
       backend:
-        baseUrl: {{ .Values.backend.baseUrl }}
+        baseUrl: "{{ .Values.backend.baseUrl }}"
         cors:
           credentials: true
-          origin: {{ .Values.backend.cors.origin }}
+          origin: "{{ .Values.backend.cors.origin }}"
         database:
           connection:
             password: "{{ .Values.postgresql.databaseAdminPassword }}"
             user: "{{ .Values.postgresql.databaseAdminUser }}"
           reading:
             allow:
-              - host: {{ .Values.backend.reading.allow.host }}
+              - host: "{{ .Values.backend.reading.allow.host }}"
       integrations:
         gitlab:
         - host: "{{ .Values.integrations.gitlab[0].host}}"
