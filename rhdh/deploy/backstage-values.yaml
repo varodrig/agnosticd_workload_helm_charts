@@ -281,7 +281,3 @@ upstream:
     ports:
       backend: 4180
       targetPort: oauth2-proxy
-  
-  serviceAccount:
-    name: backstage
-    create: true
