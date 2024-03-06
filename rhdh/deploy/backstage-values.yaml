@@ -111,7 +111,7 @@ upstream:
                 key: rhsso.clientSecret
                 name: rhdh-keycloak-creds
           - name: OAUTH2_PROXY_COOKIE_SECRET
-            value: "{{ '{{ randAlpha 32 | lower | b64enc }}' }}"
+            value: "{{ Values.oauth2Proxy.cookieSecret }}"
           - name: OAUTH2_PROXY_OIDC_ISSUER_URL
             value: {{ Values.oauth2Proxy.issuerUrl }}}
           - name: OAUTH2_PROXY_SSL_INSECURE_SKIP_VERIFY
