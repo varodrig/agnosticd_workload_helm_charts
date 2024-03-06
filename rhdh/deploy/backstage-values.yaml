@@ -64,8 +64,8 @@ upstream:
   nameOverride: rh-developer-hub
   backstage:
     image:
-      registry: {{ Values.image.registry }}
-      repository: {{ Values.image.repository }}
+      registry: "{{ Values.image.registry }}"
+      repository: "{{ Values.image.repository }}"
       tag: '{{ Values.image.tag }}'
       pullSecrets:
       - redhat-gpte-devhub-pull-secret

@@ -91,3 +91,7 @@ argocd:
           url: 	""
           token:
           username:
+image:
+  registry:
+  repository:
+  tag:
