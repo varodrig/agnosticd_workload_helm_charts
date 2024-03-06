@@ -58,6 +58,7 @@ integrations:
       token: "afdaf"
 
 catalog:
+  softwareTemplates:
   locations:
   - target: ""
     type: url

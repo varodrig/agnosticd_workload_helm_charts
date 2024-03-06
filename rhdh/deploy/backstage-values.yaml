@@ -171,12 +171,10 @@ upstream:
         rules:
           - allow: [Component, System, API, Resource, Location, Template]
         locations:
-{% for location in {{ .Values.catalog.locations  }} %}
-          - target: "https://{{ .Values.integrations.gitlab[0].host }}/{{ location.group }}/{{ location.project }}/blob/{{ location.branch }}/{{ location.file }}"
+          - target: "{{ Values.catalog.softwareTemplates}}"
             type: url
             rules:
-              - allow: [{{ location.rules.allow }}]
-{% endfor %}
+              - allow: [Template]
         providers:
           gitlab:
             selfHosted:
