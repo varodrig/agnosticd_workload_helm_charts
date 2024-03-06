@@ -111,9 +111,9 @@ upstream:
                 key: rhsso.clientSecret
                 name: rhdh-keycloak-creds
           - name: OAUTH2_PROXY_COOKIE_SECRET
-            value: "{{ Values.oauth2Proxy.cookieSecret }}"
+            value: "{{ .Values.oauth2Proxy.cookieSecret }}"
           - name: OAUTH2_PROXY_OIDC_ISSUER_URL
-            value: "{{ Values.oauth2Proxy.issuerUrl }}"
+            value: "{{ .Values.oauth2Proxy.issuerUrl }}"
           - name: OAUTH2_PROXY_SSL_INSECURE_SKIP_VERIFY
             value: 'true'
         ports:
@@ -132,23 +132,23 @@ upstream:
  
     appConfig:
       backend:
-        baseUrl: {{ Values.backend.baseUrl }}
+        baseUrl: {{ .Values.backend.baseUrl }}
         cors:
           credentials: true
-          origin: {{ Values.backend.cors.origin }}
+          origin: {{ .Values.backend.cors.origin }}
         database:
           connection:
             password: "{{ .Values.postgresql.databaseAdminPassword }}"
             user: "{{ .Values.postgresql.databaseAdminUser }}"
           reading:
             allow:
-              - host: {{ Values.backend.reading.allow.host }}
+              - host: {{ .Values.backend.reading.allow.host }}
       integrations:
         gitlab:
-        - host: "{{ Values.integrations.gitlab[0].host}}"
-          baseUrl: "{{ Values.integrations.gitlab[0].baseUrl }}"
-          apiBaseUrl: "{{ Values.integrations.gitlab[0].apiBaseUrl }}"
-          token: "{{ Values.integrations.gitlab[0].token }}"
+        - host: "{{ .Values.integrations.gitlab[0].host}}"
+          baseUrl: "{{ .Values.integrations.gitlab[0].baseUrl }}"
+          apiBaseUrl: "{{ .Values.integrations.gitlab[0].apiBaseUrl }}"
+          token: "{{ .Values.integrations.gitlab[0].token }}"
 
       proxy:
         '/developer-hub':
@@ -171,7 +171,7 @@ upstream:
         rules:
           - allow: [Component, System, API, Resource, Location, Template]
         locations:
-          - target: "{{ Values.catalog.softwareTemplates}}"
+          - target: "{{ .Values.catalog.softwareTemplates}}"
             type: url
             rules:
               - allow: [Template]
@@ -196,20 +196,20 @@ upstream:
               owner: group:rhdh
           keycloakOrg:
             default:
-                baseUrl: "https://keycloak-rhsso.{{ Values.app.baseUrl }}/auth"
-                loginRealm: "{{ Values.oauth2Proxy.realm }}"
-                realm: "{{ Values.oauth2Proxy.realm }}"
-                clientId: "{{ Values.oauth2Proxy.clientId }}"
-                clientSecret: "{{ Values.oauth2Proxy.clientSecret }}"
+                baseUrl: "https://keycloak-rhsso.{{ .Values.app.baseUrl }}/auth"
+                loginRealm: "{{ .Values.oauth2Proxy.realm }}"
+                realm: "{{ .Values.oauth2Proxy.realm }}"
+                clientId: "{{ .Values.oauth2Proxy.clientId }}"
+                clientSecret: "{{ .Values.oauth2Proxy.clientSecret }}"
 
       argocd:
         appLocatorMethods:
           - type: 'config'
             instances:
               - name: main
-                url: https://{{ Values.argocd.appLocatorMethods[0].instances[0].url }}
+                url: https://{{ .Values.argocd.appLocatorMethods[0].instances[0].url }}
                 username: admin
-                password: "{{ Values.argocd.appLocatorMethods[0].instances[0].token }}"
+                password: "{{ .Values.argocd.appLocatorMethods[0].instances[0].token }}"
 
       kubernetes:
         serviceLocatorMethod:
@@ -218,10 +218,10 @@ upstream:
           - type: "config"
             clusters:
               - name: dev-cluster
-                url: "{{ Values.clusters[0].url }}"
+                url: "{{ .Values.clusters[0].url }}"
                 authProvider: "serviceAccount"
                 skipTLSVerify: true
-                serviceAccountToken: "{{ Values.clusters[0].serviceAccountToken }}"
+                serviceAccountToken: "{{ .Values.clusters[0].serviceAccountToken }}"
         customResources:
           - group: 'tekton.dev'
             apiVersion: 'v1beta1'
@@ -251,7 +251,7 @@ upstream:
     database: backstage
     postgresqlDataDir: /var/lib/pgsql/data/userdata
     auth:
-      username: "{{ Values.postgresql.databaseUser }}"
+      username: "{{ .Values.postgresql.databaseUser }}"
       database: backstage
       existingSecret: rhdh-postgresql
       secretKeys:
