@@ -145,10 +145,10 @@ upstream:
               - host: {{ Values.backend.reading.allow.host }}
       integrations:
         gitlab:
-        - host: {{ Values.integrations.gitlab[0].host}}
-          baseUrl: {{ Values.integrations.gitlab[0].baseUrl }}
-          apiBaseUrl: {{ Values.integrations.gitlab[0].apiBaseUrl }}
-          token: {{ Values.integrations.gitlab[0].token }}
+        - host: "{{ Values.integrations.gitlab[0].host}}"
+          baseUrl: "{{ Values.integrations.gitlab[0].baseUrl }}"
+          apiBaseUrl: "{{ Values.integrations.gitlab[0].apiBaseUrl }}"
+          token: "{{ Values.integrations.gitlab[0].token }}"
 
       proxy:
         '/developer-hub':
@@ -172,7 +172,7 @@ upstream:
           - allow: [Component, System, API, Resource, Location, Template]
         locations:
 {% for location in {{ .Values.catalog.locations  }} %}
-          - target: https://{{ .Values.integrations.gitlab[0].host }}/{{ location.group }}/{{ location.project }}/blob/{{ location.branch }}/{{ location.file }}
+          - target: "https://{{ .Values.integrations.gitlab[0].host }}/{{ location.group }}/{{ location.project }}/blob/{{ location.branch }}/{{ location.file }}"
             type: url
             rules:
               - allow: [{{ location.rules.allow }}]
@@ -180,7 +180,7 @@ upstream:
         providers:
           gitlab:
             selfHosted:
-              host: {{ .Values.integrations.gitlab[0].host }}
+              host: "{{ .Values.integrations.gitlab[0].host }}"
               schedule: # optional; same options as in TaskScheduleDefinition
                 # supports cron, ISO duration, "human duration" as used in code
                 frequency: { seconds: 10 }
@@ -211,7 +211,7 @@ upstream:
               - name: main
                 url: https://{{ Values.argocd.appLocatorMethods[0].instances[0].url }}
                 username: admin
-                password: {{ Values.argocd.appLocatorMethods[0].instances[0].token }}
+                password: "{{ Values.argocd.appLocatorMethods[0].instances[0].token }}"
 
       kubernetes:
         serviceLocatorMethod:
@@ -220,10 +220,10 @@ upstream:
           - type: "config"
             clusters:
               - name: dev-cluster
-                url: {{ Values.clusters[0].url }}
+                url: "{{ Values.clusters[0].url }}"
                 authProvider: "serviceAccount"
                 skipTLSVerify: true
-                serviceAccountToken: {{ Values.clusters[0].serviceAccountToken }}
+                serviceAccountToken: "{{ Values.clusters[0].serviceAccountToken }}"
         customResources:
           - group: 'tekton.dev'
             apiVersion: 'v1beta1'
@@ -253,7 +253,7 @@ upstream:
     database: backstage
     postgresqlDataDir: /var/lib/pgsql/data/userdata
     auth:
-      username: {{ Values.postgresql.databaseUser }}
+      username: "{{ Values.postgresql.databaseUser }}"
       database: backstage
       existingSecret: rhdh-postgresql
       secretKeys:
