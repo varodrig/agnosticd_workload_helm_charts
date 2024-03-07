@@ -165,8 +165,6 @@ upstream:
 
       signInPage: oauth2Proxy
 
-      scaffolder: 
-        {}
         # see https://backstage.io/docs/features/software-templates/configuration for software template options
 
       catalog:
