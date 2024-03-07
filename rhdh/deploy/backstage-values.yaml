@@ -163,8 +163,6 @@ upstream:
         providers:
           oauth2Proxy: {}
 
-      signInPage: oauth2Proxy
-
         # see https://backstage.io/docs/features/software-templates/configuration for software template options
 
       catalog:
@@ -201,6 +199,8 @@ upstream:
                 realm: "{{ .Values.oauth2Proxy.realm }}"
                 clientId: "{{ .Values.oauth2Proxy.clientId }}"
                 clientSecret: "{{ .Values.oauth2Proxy.clientSecret }}"
+      
+      signInPage: oauth2Proxy
 
       scaffolder: {}
 
