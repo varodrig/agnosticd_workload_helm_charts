@@ -203,13 +203,13 @@ upstream:
                 clientSecret: "{{ .Values.oauth2Proxy.clientSecret }}"
 
       scaffolder: {}
-      
+
       argocd:
         appLocatorMethods:
           - type: 'config'
             instances:
               - name: main
-                url: https://{{ .Values.argocd.appLocatorMethods[0].instances[0].url }}
+                url: "https://{{ .Values.argocd.appLocatorMethods[0].instances[0].url }}"
                 username: admin
                 password: "{{ .Values.argocd.appLocatorMethods[0].instances[0].token }}"
 
