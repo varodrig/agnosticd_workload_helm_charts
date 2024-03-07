@@ -51,7 +51,7 @@ global:
                   mountPoint: entity.page.ci/cards
 
   # -- Shorthand for users who do not want to specify a custom HOSTNAME. Used ONLY with the DEFAULT upstream.backstage.appConfig value and with OCP Route enabled.
-  clusterRouterBase:  "{{ .Values.app.baseUrl  }}"
+  clusterRouterBase:  ""
   # -- Custom hostname shorthand, overrides `global.clusterRouterBase`, `upstream.ingress.host`, `route.host`, and url values in `upstream.backstage.appConfig`.
   # If neither `global.clusterRouterBase` nor `global.host` are set, the helm chart will attempt to autofill with the hostname of the [OCP Ingress configuration](https://access.redhat.com/documentation/en-us/openshift_container_platform/4.14/html/networking/configuring-ingress#nw-installation-ingress-config-asset_configuring-ingress)
   auth:
@@ -64,9 +64,9 @@ upstream:
   nameOverride: rh-developer-hub
   backstage:
     image:
-      registry: "{{ .Values.image.registry }}"
-      repository: "{{ .Values.image.repository }}"
-      tag: '{{ .Values.image.tag }}'
+      registry: ""
+      repository: ""
+      tag: ""
       pullSecrets:
       - redhat-gpte-devhub-pull-secret
     extraEnvVars:
@@ -111,9 +111,9 @@ upstream:
                 key: rhsso.clientSecret
                 name: rhdh-keycloak-creds
           - name: OAUTH2_PROXY_COOKIE_SECRET
-            value: "{{ .Values.oauth2Proxy.cookieSecret }}"
+            value: ""
           - name: OAUTH2_PROXY_OIDC_ISSUER_URL
-            value: "{{ .Values.oauth2Proxy.issuerUrl }}"
+            value: ""
           - name: OAUTH2_PROXY_SSL_INSECURE_SKIP_VERIFY
             value: 'true'
         ports:
@@ -132,23 +132,23 @@ upstream:
  
     appConfig:
       backend:
-        baseUrl: "{{ .Values.backend.baseUrl }}"
+        baseUrl: ""
         cors:
           credentials: true
-          origin: "{{ .Values.backend.cors.origin }}"
+          origin: ""
         database:
           connection:
-            password: "{{ .Values.postgresql.databaseAdminPassword }}"
-            user: "{{ .Values.postgresql.databaseAdminUser }}"
+            password: ""
+            user: ""
           reading:
             allow:
-              - host: "{{ .Values.backend.reading.allow.host }}"
+              - host: ""
       integrations:
         gitlab:
-        - host: "{{ .Values.integrations.gitlab[0].host}}"
-          baseUrl: "{{ .Values.integrations.gitlab[0].baseUrl }}"
-          apiBaseUrl: "{{ .Values.integrations.gitlab[0].apiBaseUrl }}"
-          token: "{{ .Values.integrations.gitlab[0].token }}"
+        - host: ""
+          baseUrl: ""
+          apiBaseUrl: ""
+          token: ""
 
       proxy:
         '/developer-hub':
@@ -169,14 +169,14 @@ upstream:
         rules:
           - allow: [Component, System, API, Resource, Location, Template]
         locations:
-          - target: "{{ .Values.catalog.softwareTemplates}}"
+          - target: ""
             type: url
             rules:
               - allow: [Template]
         providers:
           gitlab:
             selfHosted:
-              host: "{{ .Values.integrations.gitlab[0].host }}"
+              host: ""
               schedule: # optional; same options as in TaskScheduleDefinition
                 # supports cron, ISO duration, "human duration" as used in code
                 frequency: { seconds: 10 }
@@ -194,11 +194,11 @@ upstream:
               owner: group:rhdh
           keycloakOrg:
             default:
-                baseUrl: "https://keycloak-rhsso.{{ .Values.app.baseUrl }}/auth"
-                loginRealm: "{{ .Values.oauth2Proxy.realm }}"
-                realm: "{{ .Values.oauth2Proxy.realm }}"
-                clientId: "{{ .Values.oauth2Proxy.clientId }}"
-                clientSecret: "{{ .Values.oauth2Proxy.clientSecret }}"
+                baseUrl: ""
+                loginRealm: ""
+                realm: ""
+                clientId: ""
+                clientSecret: ""
       
       signInPage: oauth2Proxy
 
@@ -209,9 +209,9 @@ upstream:
           - type: 'config'
             instances:
               - name: main
-                url: "https://{{ .Values.argocd.appLocatorMethods[0].instances[0].url }}"
+                url: ""
                 username: admin
-                password: "{{ .Values.argocd.appLocatorMethods[0].instances[0].token }}"
+                password: ""
 
       kubernetes:
         serviceLocatorMethod:
@@ -220,10 +220,10 @@ upstream:
           - type: "config"
             clusters:
               - name: dev-cluster
-                url: "{{ .Values.clusters[0].url }}"
+                url: ""
                 authProvider: "serviceAccount"
                 skipTLSVerify: true
-                serviceAccountToken: "{{ .Values.clusters[0].serviceAccountToken }}"
+                serviceAccountToken: ""
         customResources:
           - group: 'tekton.dev'
             apiVersion: 'v1beta1'
@@ -253,7 +253,7 @@ upstream:
     database: backstage
     postgresqlDataDir: /var/lib/pgsql/data/userdata
     auth:
-      username: "{{ .Values.postgresql.databaseUser }}"
+      username: ""
       database: backstage
       existingSecret: rhdh-postgresql
       secretKeys:
