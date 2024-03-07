@@ -202,6 +202,8 @@ upstream:
                 clientId: "{{ .Values.oauth2Proxy.clientId }}"
                 clientSecret: "{{ .Values.oauth2Proxy.clientSecret }}"
 
+      scaffolder: {}
+      
       argocd:
         appLocatorMethods:
           - type: 'config'
