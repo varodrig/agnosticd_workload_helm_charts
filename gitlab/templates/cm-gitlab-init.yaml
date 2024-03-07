@@ -119,7 +119,7 @@ data:
 
         - name: List users
           ansible.builtin.uri:
-            url: https://{{ $.Values.gitlab.host }}/api/v4/users
+            url: https://{{ $.Values.gitlab.host }}/api/v4/users?per_page="{{ $.Values.gitlab.users.count }} + 1"
             method: GET
             headers:
               PRIVATE-TOKEN: '{{ "{{" }} root_token {{ "}}" }}'
