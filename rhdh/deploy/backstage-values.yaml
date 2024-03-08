@@ -91,7 +91,7 @@ upstream:
         valueFrom:
           secretKeyRef:
             name: developer-hub-postgresql
-            key: databasePassword
+            key: databaseAdminPassword
       - name: POSTGRESQL_ADMIN_PASSWORD
         valueFrom:
           secretKeyRef:
