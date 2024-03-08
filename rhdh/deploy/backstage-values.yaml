@@ -66,13 +66,13 @@ upstream:
       - redhat-gpte-devhub-pull-secret
     extraEnvVars:
       - name: BACKEND_SECRET
-        value: "{{ '{{ randAlphaNum 24 | b64enc }}' }}"
+        value:
       - name: 'APP_CONFIG_app_baseUrl'
-        value: ""
+        value:
       - name: 'APP_CONFIG_backend_baseUrl'
-        value: ""
+        value:
       - name: 'APP_CONFIG_backend_cors_origin'
-        value: ""
+        value: 
       - name: POSTGRES_ADMIN_PASSWORD
         valueFrom:
           secretKeyRef:
@@ -83,9 +83,9 @@ upstream:
       - name: APP_CONFIG_catalog_providers_keycloakOrg_default_baseUrl
         value: https://{{ ocp4_workload_redhat_developer_hub_keycloak_host }}/auth
       - name: APP_CONFIG_catalog_providers_keycloakOrg_default_loginRealm
-        value: backstage
+        value: 
       - name: APP_CONFIG_catalog_providers_keycloakOrg_default_realm
-        value: backstage
+        value:
       - name: APP_CONFIG_catalog_providers_keycloakOrg_default_clientId
         valueFrom:
           secretKeyRef:
@@ -137,7 +137,7 @@ upstream:
           port: 7007
           host: 0.0.0.0
         csp:
-          connect-src: ["'self'", 'http:', 'https:']
+          connect-src: ['self', 'http:', 'https:']
         cors:
           credentials: true
           methods: [GET, POST, PUT, DELETE]
@@ -154,10 +154,10 @@ upstream:
             - host: ""
       integrations:
         gitlab:
-        - host: ""
-          baseUrl: ""
-          apiBaseUrl: ""
-          token: ""
+        - host: 
+          baseUrl:
+          apiBaseUrl:
+          token: 
 
       proxy:
         endpoints:
@@ -183,14 +183,14 @@ upstream:
         rules:
           - allow: [Component, System, API, Resource, Location, Template]
         locations:
-          - target: ""
+          - target:
             type: url
             rules:
               - allow: [Template]
         providers:
           gitlab:
             selfHosted:
-              host: ""
+              host: 
               schedule: # optional; same options as in TaskScheduleDefinition
                 # supports cron, ISO duration, "human duration" as used in code
                 frequency: { seconds: 10 }
@@ -219,9 +219,9 @@ upstream:
           - type: 'config'
             instances:
               - name: main
-                url: ""
+                url:
                 username: admin
-                password: ""
+                password:
 
       kubernetes:
         serviceLocatorMethod:
@@ -230,10 +230,10 @@ upstream:
           - type: "config"
             clusters:
               - name: dev-cluster
-                url: ""
+                url: 
                 authProvider: "serviceAccount"
                 skipTLSVerify: true
-                serviceAccountToken: ""
+                serviceAccountToken:
         customResources:
           - group: 'tekton.dev'
             apiVersion: 'v1beta1'
