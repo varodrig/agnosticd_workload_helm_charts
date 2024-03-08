@@ -9,4 +9,4 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: rhdh-k8s-plugin
-  namespace:  {{ $.Values.namespace }}
+  namespace:  "{{ _ocp4_workload_mad_roadshow_namespace }}"

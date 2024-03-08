@@ -1,0 +1,13 @@
+pullSecrets: ""
+
+oauth2Proxy:
+  issuerUrl: ""
+  cookieSecret: ""
+  clientId: ""
+  clientSecret: ""
+  skipTlsVerify: "true"
+  baseUrl: ""
+  realm: ""
+
+postgresql:
+  databasePassword: "${POSTGRES_DB_PASSWORD}"
