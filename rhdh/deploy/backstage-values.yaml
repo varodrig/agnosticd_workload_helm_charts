@@ -140,9 +140,9 @@ upstream:
           connection:
             password: ""
             user: ""
-          reading:
-            allow:
-              - host: ""
+        reading:
+          allow:
+            - host: ""
       integrations:
         gitlab:
         - host: ""
@@ -172,7 +172,7 @@ upstream:
           - target: ""
             type: url
             rules:
-              - allow: [Template]
+              - allow: Template
         providers:
           gitlab:
             selfHosted:
