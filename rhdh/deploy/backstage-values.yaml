@@ -1,4 +1,8 @@
 global:
+  auth:
+    backend:
+      enabled: true
+  clusterRouterBase:  ""
   dynamic:
     # -- Array of YAML files listing dynamic plugins to include with those listed in the `plugins` field.
     # Relative paths are resolved from the working directory of the initContainer that will install the plugins (`/opt/app-root/src`).
@@ -49,14 +53,6 @@ global:
                       gridRowStart: 1
                   importName: TektonCI
                   mountPoint: entity.page.ci/cards
-
-  # -- Shorthand for users who do not want to specify a custom HOSTNAME. Used ONLY with the DEFAULT upstream.backstage.appConfig value and with OCP Route enabled.
-  clusterRouterBase:  ""
-  # -- Custom hostname shorthand, overrides `global.clusterRouterBase`, `upstream.ingress.host`, `route.host`, and url values in `upstream.backstage.appConfig`.
-  # If neither `global.clusterRouterBase` nor `global.host` are set, the helm chart will attempt to autofill with the hostname of the [OCP Ingress configuration](https://access.redhat.com/documentation/en-us/openshift_container_platform/4.14/html/networking/configuring-ingress#nw-installation-ingress-config-asset_configuring-ingress)
-  auth:
-    backend:
-      enabled: true
 
 # -- Upstream Backstage [chart configuration](https://github.com/backstage/charts/blob/main/charts/backstage/values.yaml)
 # @default -- Use Openshift compatible settings
@@ -111,7 +107,7 @@ upstream:
                 key: rhsso.clientSecret
                 name: rhdh-keycloak-creds
           - name: OAUTH2_PROXY_COOKIE_SECRET
-            value: ""
+            value: "{{ '{{ randAlpha 32 | lower | b64enc }}' }}"
           - name: OAUTH2_PROXY_OIDC_ISSUER_URL
             value: ""
           - name: OAUTH2_PROXY_SSL_INSECURE_SKIP_VERIFY
@@ -132,14 +128,22 @@ upstream:
  
     appConfig:
       backend:
-        baseUrl: ""
+        listen:
+          port: 7007
+          host: 0.0.0.0
+        csp:
+          connect-src: ["'self'", 'http:', 'https:']
         cors:
           credentials: true
+          methods: [GET, POST, PUT, DELETE]
           origin: ""
         database:
+          client: pg
           connection:
             password: ""
             user: ""
+            host: ""
+            port: ""
         reading:
           allow:
             - host: ""
@@ -151,17 +155,22 @@ upstream:
           token: ""
 
       proxy:
-        '/developer-hub':
-          target: https://raw.githubusercontent.com/
-          pathRewrite:
-            '^/api/proxy/developer-hub': /redhat-gpte-devopsautomation/agnosticd_workload_helm_charts/main/rhdh/json/rhdh_home.json
-          secure: false
-          changeOrigin: true
+        endpoints:
+          '/developer-hub':
+            target: https://raw.githubusercontent.com/
+            pathRewrite:
+              '^/api/proxy/developer-hub': /redhat-gpte-devopsautomation/agnosticd_workload_helm_charts/main/rhdh/json/rhdh_home.json
+            secure: false
+            changeOrigin: true
 
       auth:
         environment: production
         providers:
           oauth2Proxy: {}
+
+      signInPage: oauth2Proxy
+
+      scaffolder:
 
         # see https://backstage.io/docs/features/software-templates/configuration for software template options
 
@@ -172,7 +181,7 @@ upstream:
           - target: ""
             type: url
             rules:
-              - allow: Template
+              - allow: [Template]
         providers:
           gitlab:
             selfHosted:
@@ -184,7 +193,7 @@ upstream:
                 timeout: { seconds: 60 }
           ocm:
             default:
-              name: multiclusterhub
+              name: dev-cluster
               kubernetesPluginRef: dev-cluster
               schedule: # optional; same options as in TaskScheduleDefinition
                 # supports cron, ISO duration, "human duration" as used in code
@@ -194,13 +203,11 @@ upstream:
               owner: group:rhdh
           keycloakOrg:
             default:
-                baseUrl: ""
-                loginRealm: ""
-                realm: ""
-                clientId: ""
-                clientSecret: ""
-      
-      signInPage: oauth2Proxy
+              baseUrl: ""
+              loginRealm: ""
+              realm: ""
+              clientId: ""
+              clientSecret: ""
 
       argocd:
         appLocatorMethods:
@@ -240,11 +247,15 @@ upstream:
         kubernetes: true
         github: false
         argocd: true
+        github: false
         githubOrg: false
         techdocs: false
         ocm: true
         gitlab: true
         keycloak: true
+        jenkins: false
+        permission: false
+        sonarqube: false
 
   postgresql:
     enabled: true
