@@ -202,8 +202,6 @@ upstream:
       
       signInPage: oauth2Proxy
 
-      scaffolder:
-
       argocd:
         appLocatorMethods:
           - type: 'config'
