@@ -277,7 +277,7 @@ upstream:
           valueFrom:
             secretKeyRef:
               key: postgres-password
-              name: developer-hub-postgresql
+              name: rhdh-postgresql
               
   service:
     ports:
