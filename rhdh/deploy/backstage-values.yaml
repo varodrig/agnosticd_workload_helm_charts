@@ -134,7 +134,7 @@ upstream:
     appConfig:
       backend:
         listen:
-          port: 7007
+          port: 7010
           host: 0.0.0.0
         csp:
           connect-src: ['self', 'http:', 'https:']
@@ -152,12 +152,6 @@ upstream:
         reading:
           allow:
             - host: ""
-      integrations:
-        gitlab:
-        - host: 
-          baseUrl:
-          apiBaseUrl:
-          token: 
 
       proxy:
         endpoints:
@@ -168,10 +162,6 @@ upstream:
             secure: false
             changeOrigin: true
 
-      auth:
-        environment: production
-        providers:
-          oauth2Proxy: {}
 
       signInPage: oauth2Proxy
 
