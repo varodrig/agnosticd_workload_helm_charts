@@ -132,16 +132,6 @@ upstream:
               secretKeyRef:
                 key: oauth2Proxy.clientSecret
                 name: rhdh-keycloak-creds
-          - name: OAUTH2_PROXY_COOKIE_SECRET
-            value: "{{ '{{ randAlpha 32 | lower | b64enc }}' }}"
-          - name: OAUTH2_PROXY_OIDC_ISSUER_URL
-            valueFrom:
-              secretKeyRef:
-                key: oauth2Proxy.issuerUrl
-                name: rhdh-keycloak-creds
-          - name: OAUTH2_PROXY_SSL_INSECURE_SKIP_VERIFY
-            value: 'true'
-
         imagePullPolicy: IfNotPresent
         image: 'quay.io/oauth2-proxy/oauth2-proxy:latest'
         args:
