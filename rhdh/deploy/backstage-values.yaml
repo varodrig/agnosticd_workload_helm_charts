@@ -63,7 +63,7 @@ upstream:
       repository: ""
       tag: ""
       pullSecrets:
-      - redhat-gpte-devhub-pull-secret
+      - mad-developer-hub-pull-secret
     extraEnvVars:
       - name: BACKEND_SECRET
         valueFrom:
