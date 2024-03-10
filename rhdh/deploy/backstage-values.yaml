@@ -9,6 +9,8 @@ global:
     includes:
       - dynamic-plugins.default.yaml
     plugins:
+      - package: ./dynamic-plugins/dist/immobiliarelabs-backstage-plugin-gitlab-backend-dynamic
+        disabled: false
       - package: ./dynamic-plugins/dist/immobiliarelabs-backstage-plugin-gitlab
         disabled: false
       - package: ./dynamic-plugins/dist/backstage-plugin-catalog-backend-module-gitlab-dynamic
@@ -51,3 +53,251 @@ global:
                         allOf:
                           - isTektonCIAvailable
         disabled: false
+
+# -- Upstream Backstage [chart configuration](https://github.com/backstage/charts/blob/main/charts/backstage/values.yaml)
+# @default -- Use Openshift compatible settings
+upstream:
+  backstage:
+    image:
+      registry: ""
+      repository: ""
+      tag: ""
+      pullSecrets:
+      - redhat-gpte-devhub-pull-secret
+    extraEnvVars:
+      - name: BACKEND_SECRET
+        value:
+      - name: 'APP_CONFIG_app_baseUrl'
+        value:
+      - name: 'APP_CONFIG_backend_baseUrl'
+        value:
+      - name: 'APP_CONFIG_backend_cors_origin'
+        value: 
+      - name: POSTGRES_ADMIN_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            key: postgres-password
+            name: rhdh-postgresql
+      - name: NODE_TLS_REJECT_UNAUTHORIZED
+        value: "0"
+      - name: APP_CONFIG_catalog_providers_keycloakOrg_default_baseUrl
+        value: https://{{ ocp4_workload_redhat_developer_hub_keycloak_host }}/auth
+      - name: APP_CONFIG_catalog_providers_keycloakOrg_default_loginRealm
+        value: 
+      - name: APP_CONFIG_catalog_providers_keycloakOrg_default_realm
+        value:
+      - name: APP_CONFIG_catalog_providers_keycloakOrg_default_clientId
+        valueFrom:
+          secretKeyRef:
+            key: rhsso.clientId
+            name: rhdh-keycloak-creds
+      - name: APP_CONFIG_catalog_providers_keycloakOrg_default_clientSecret
+        valueFrom:
+          secretKeyRef:
+            key: rhsso.clientSecret
+            name: rhdh-keycloak-creds
+      - name: LOG_LEVEL
+        value: debug
+    extraContainers:
+      - name: oauth2-proxy
+        env:
+          - name: OAUTH2_PROXY_CLIENT_ID
+            valueFrom:
+              secretKeyRef:
+                key: rhsso.clientId
+                name: rhdh-keycloak-creds
+          - name: OAUTH2_PROXY_CLIENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                key: rhsso.clientSecret
+                name: rhdh-keycloak-creds
+          - name: OAUTH2_PROXY_COOKIE_SECRET
+            value: "{{ '{{ randAlpha 32 | lower | b64enc }}' }}"
+          - name: OAUTH2_PROXY_OIDC_ISSUER_URL
+            value:
+          - name: OAUTH2_PROXY_SSL_INSECURE_SKIP_VERIFY
+            value: 'true'
+        ports:
+          - name: oauth2-proxy
+            containerPort: 4180
+            protocol: TCP
+        imagePullPolicy: IfNotPresent
+        image: 'quay.io/oauth2-proxy/oauth2-proxy:latest'
+        args:
+          - '--provider=oidc'
+          - '--email-domain=*'
+          - '--upstream=http://localhost:7007'
+          - '--http-address=0.0.0.0:4180'
+          - '--skip-provider-button'
+          - '--insecure-oidc-allow-unverified-email=true'          
+ 
+    appConfig:
+      backend:
+        listen:
+          port: 7007
+          host: 0.0.0.0
+        csp:
+          connect-src: ['self', 'http:', 'https:']
+        cors:
+          credentials: true
+          methods: [GET, POST, PUT, DELETE]
+          origin: ""
+        database:
+          client: pg
+          connection:
+            password: ""
+            user: ""
+            host: "backstage-postgresql"
+            port: ""
+        reading:
+          allow:
+            - host: ""
+      integrations:
+        gitlab:
+        - host: 
+          baseUrl:
+          apiBaseUrl:
+          token: 
+
+      proxy:
+        endpoints:
+          '/developer-hub':
+            target: https://raw.githubusercontent.com/
+            pathRewrite:
+              '^/api/proxy/developer-hub': /redhat-gpte-devopsautomation/agnosticd_workload_helm_charts/main/rhdh/json/rhdh_home.json
+            secure: false
+            changeOrigin: true
+
+      auth:
+        environment: production
+        providers:
+          oauth2Proxy: {}
+
+      signInPage: oauth2Proxy
+
+      scaffolder:
+
+        # see https://backstage.io/docs/features/software-templates/configuration for software template options
+
+      catalog:
+        rules:
+          - allow: [Component, System, API, Resource, Location, Template]
+        locations:
+          - target:
+            type: url
+            rules:
+              - allow: [Template]
+        providers:
+          gitlab:
+            selfHosted:
+              host: 
+              schedule: # optional; same options as in TaskScheduleDefinition
+                # supports cron, ISO duration, "human duration" as used in code
+                frequency: { seconds: 10 }
+                # supports ISO duration, "human duration" as used in code
+                timeout: { seconds: 60 }
+          ocm:
+            default:
+              name: dev-cluster
+              kubernetesPluginRef: dev-cluster
+              schedule: # optional; same options as in TaskScheduleDefinition
+                # supports cron, ISO duration, "human duration" as used in code
+                frequency: { seconds: 10 }
+                # supports ISO duration, "human duration" as used in code
+                timeout: { seconds: 60 }
+              owner: group:rhdh
+          keycloakOrg:
+            default:
+              baseUrl: ""
+              loginRealm: ""
+              realm: ""
+              clientId: ""
+              clientSecret: ""
+
+      argocd:
+        appLocatorMethods:
+          - type: 'config'
+            instances:
+              - name: main
+                url:
+                username: admin
+                password:
+
+      kubernetes:
+        serviceLocatorMethod:
+          type: "multiTenant"
+        clusterLocatorMethods:
+          - type: "config"
+            clusters:
+              - name: dev-cluster
+                url: 
+                authProvider: "serviceAccount"
+                skipTLSVerify: true
+                serviceAccountToken:
+        customResources:
+          - group: 'tekton.dev'
+            apiVersion: 'v1beta1'
+            plural: 'pipelineruns'
+          - group: 'tekton.dev'
+            apiVersion: 'v1beta1'
+            plural: 'taskruns'
+          - group: 'route.openshift.io'
+            apiVersion: 'v1'
+            plural: 'routes'
+
+      permission:
+        enabled: false
+
+      enabled:
+        kubernetes: true
+        github: false
+        argocd: true
+        github: false
+        githubOrg: false
+        techdocs: false
+        ocm: true
+        gitlab: true
+        keycloak: true
+        jenkins: false
+        permission: false
+        sonarqube: false
+
+  postgresql:
+    enabled: true
+    database: backstage
+    postgresqlDataDir: /var/lib/pgsql/data/userdata
+    auth:
+      username: ""
+      database: backstage
+      existingSecret: rhdh-postgresql
+      secretKeys:
+        userPasswordKey: postgres-password
+    image:
+      registry: registry.redhat.io
+      repository: rhel9/postgresql-13
+      tag: 1-73
+    primary:
+      securityContext:
+        enabled: false
+      podSecurityContext:
+        enabled: false
+      containerSecurityContext:
+        enabled: false
+      persistence:
+        enabled: true
+        mountPath: /var/lib/pgsql/data
+      extraEnvVars:
+        - name: POSTGRESQL_ADMIN_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: postgres-password
+              name: rhdh-postgresql
+              
+  service:
+    ports:
+      backend: 4180
+      targetPort: oauth2-proxy
+  
+  serviceAccount:
+    name: backstage
+    create: true
