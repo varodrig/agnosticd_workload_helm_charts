@@ -132,6 +132,18 @@ upstream:
               secretKeyRef:
                 key: oauth2Proxy.clientSecret
                 name: rhdh-keycloak-creds
+          - name: OAUTH2_PROXY_COOKIE_SECRET
+            valueFrom:
+              secretKeyRef:
+                key: oauth2Proxy.clientSecret
+                name: rhdh-keycloak-creds
+          - name: OAUTH2_PROXY_OIDC_ISSUER_URL
+            valueFrom:
+              secretKeyRef:
+                key: oauth2Proxy.issuerUrl
+                name: rhdh-keycloak-creds
+          - name: OAUTH2_PROXY_SSL_INSECURE_SKIP_VERIFY
+            value: 'true'
         ports:
           - name: oauth2-proxy
             containerPort: 4180
@@ -162,7 +174,7 @@ upstream:
           connection:
             password: ""
             user: ""
-            host: "backstage-postgresql"
+            host: "developer-hub-postgresql"
             port: ""
         reading:
           allow:
