@@ -29,10 +29,6 @@ global:
         disabled: false
       - package: ./dynamic-plugins/dist/roadiehq-backstage-plugin-argo-cd
         disabled: false
-      - package: ./dynamic-plugins/dist/janus-idp-backstage-plugin-ocm
-        disabled: false
-      - package: ./dynamic-plugins/dist/janus-idp-backstage-plugin-ocm-backend-dynamic
-        disabled: false
       - package: ./dynamic-plugins/dist/roadiehq-scaffolder-backend-module-utils-dynamic
         disabled: false
       - package: ./dynamic-plugins/dist/janus-idp-backstage-plugin-keycloak-backend-dynamic
@@ -223,16 +219,6 @@ upstream:
                 frequency: { seconds: 10 }
                 # supports ISO duration, "human duration" as used in code
                 timeout: { seconds: 60 }
-          ocm:
-            default:
-              name: dev-cluster
-              kubernetesPluginRef: dev-cluster
-              schedule: # optional; same options as in TaskScheduleDefinition
-                # supports cron, ISO duration, "human duration" as used in code
-                frequency: { seconds: 10 }
-                # supports ISO duration, "human duration" as used in code
-                timeout: { seconds: 60 }
-              owner: group:rhdh
           keycloakOrg:
             default:
               baseUrl: ""
@@ -282,7 +268,7 @@ upstream:
         github: false
         githubOrg: false
         techdocs: false
-        ocm: true
+        ocm: false
         gitlab: true
         keycloak: true
         jenkins: false
