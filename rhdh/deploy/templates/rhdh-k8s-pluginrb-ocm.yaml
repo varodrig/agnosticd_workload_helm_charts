@@ -8,5 +8,5 @@ roleRef:
   name: rhdh-k8s-plugin-ocm
 subjects:
 - kind: ServiceAccount
-  name: rhdh-k8s-plugin
+  name: backstage
   namespace: {{ $.Values.namespace }}

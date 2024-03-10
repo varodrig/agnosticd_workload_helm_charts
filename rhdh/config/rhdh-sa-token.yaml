@@ -3,5 +3,5 @@ kind: Secret
 metadata:
   name: sa-token-secret
   annotations:
-    kubernetes.io/service-account.name: rhdh-k8s-plugin
+    kubernetes.io/service-account.name: backstage
 type: kubernetes.io/service-account-token
