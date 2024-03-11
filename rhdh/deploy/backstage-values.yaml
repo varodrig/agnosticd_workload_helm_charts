@@ -210,6 +210,10 @@ upstream:
             type: url
             rules:
               - allow: [Template]
+          - target:
+            type: url
+            rules:
+              - allow: [ Group, User]
         providers:
           gitlab:
             selfHosted:
