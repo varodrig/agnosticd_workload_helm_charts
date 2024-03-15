@@ -1,0 +1,54 @@
+# Default values for tackle2.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+nameOverride: ""
+fullnameOverride: ""
+
+namespacePermissions:
+  # Which OpenShift user gets permissions for the namespace
+  user: kubeadmin
+  # Which role to grant the user on the namespace
+  role: admin
+
+# Deploy MTA Operator
+deployOperator: true
+operatorChannel: stable-v6.0
+
+# Deploy Seed Job
+seedTackle: false
+seedJob:
+  repository: quay.io/gpte-devops-automation/tackle2-setup
+  tag: "v2.1.3"
+  pullPolicy: IfNotPresent
+
+# Authentication for MTA
+# Leave empty for no authentication (tackleInstance.feature_auth_required: false)
+tackleUser: ""
+tacklePassword: ""
+
+tackleUIServiceName: mta-ui
+
+# Settings for the Tackle instance
+# if rwx_supported: false make sure to set
+# the storage class variables to proper values
+# (e.g. gp3-csi)
+tackleInstance:
+  featureAuthRequired: false
+  hubBucketVolumeSize: 10Gi
+  hubDatabaseVolumeSize: 5Gi
+  keycloakDatabaseDataVolumeSize: 1Gi
+  mavenDataVolumeSize: 10Gi
+  pathfinderDatabaseDataVolumeSize: 1Gi
+  rwx_supported: true
+  rwoStorageClass: ocs-storagecluster-ceph-rbd
+  rwxStorageClass: ocs-storagecluster-cephfs  
+
+# Catalogsource Settings
+# Use a catalog source image snapshot
+useCatalogSnapshot: false
+catalogSource:
+  name: redhat-operators-snapshot-mta6
+  namespace: openshift-mta
+  image: quay.io/gpte-devops-automation/olm_snapshot_redhat_catalog
+  tag: v4.11_2022_11_21
