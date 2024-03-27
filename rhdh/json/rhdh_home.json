@@ -57,11 +57,11 @@
       "links": [
         {
           "iconUrl": "/homepage/icons/icons8/openshift.png",
-          "label": "OpenShift GitOps",
+          "label": "OpenShift GitOps"
         },
         {
           "iconUrl": "/homepage/icons/icons8/openshift.png",
-          "label": "OpenShift Pipelines",
+          "label": "OpenShift Pipelines"
         },
         {
           "iconUrl": "/homepage/icons/sonarqube.svg",
@@ -81,7 +81,7 @@
       "links": [
         {
           "iconUrl": "/homepage/icons/icons8/openshift.png",
-          "label": "OpenShift",
+          "label": "OpenShift"
         }
       ]
     },
@@ -90,7 +90,7 @@
       "links": [
         {
           "iconUrl": "/homepage/icons/keycloak.svg",
-          "label": "Keycloak",
+          "label": "Keycloak"
         }
       ]
     }
