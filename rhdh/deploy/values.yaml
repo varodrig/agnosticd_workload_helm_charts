@@ -19,3 +19,7 @@ postgresql:
   databaseUser: "${POSTGRES_USER}"
   databaseAdminUser: "${POSTGRES_ADMIN_USER}"
   databaseName: postgres
+
+rhdh:
+  backend:
+    baseUrl: xx
