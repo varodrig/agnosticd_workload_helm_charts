@@ -1,36 +1,5 @@
 pullSecrets: ""
 namespace: ""
-app:
-  baseUrl: ""
-  host: ""
-  cluster: ""
-
-backend:
-  baseUrl: ""
-  cors:
-    origin: ""
-  reading:
-    allow:
-      - host: 'sfd'
-
-
-clusters:
-  - name: dev-cluster
-    url: ""
-    serviceAccountToken: ""
-
-
-imagePullSecrets: []
-nameOverride: ""
-fullnameOverride: "developer-hub"
-
-serviceAccount:
-  # Specifies whether a service account should be created
-  create: true
-  # Annotations to add to the service account
-  annotations: ""
-  # The name of the service account to use.
-  # If not set and create is true, a name is generated using the fullname template
 
 oauth2Proxy:
   issuerUrl: ""
@@ -41,33 +10,6 @@ oauth2Proxy:
   baseUrl: ""
   realm: ""
 
-
-service:
-  type: ClusterIP
-  port: 8080
-
-# name of instances
-name: rhdh
-
-
-integrations:
-  gitlab:
-    - host: "http://xxx.com"
-      baseUrl: "app.cluster"
-      apiBaseUrl: "app.cluster"
-      token: "afdaf"
-
-catalog:
-  locations:
-  - target: ""
-    type: url
-    rules:
-      - allow: [Template]
-  providers:
-    gitlab:
-      selfHosted:
-        host: ""
-
 postgresql:
   databasePassword: "${POSTGRES_DB_PASSWORD}"
   databaseAdminPassword: "${POSTGRES_DB_PASSWORD}"
@@ -77,16 +19,3 @@ postgresql:
   databaseUser: "${POSTGRES_USER}"
   databaseAdminUser: "${POSTGRES_ADMIN_USER}"
   databaseName: postgres
-  storage:
-    enabled: true
-    size: 2G
-    storageClass: ""
-
-argocd:
-  appLocatorMethods:
-    - type: 'config'
-      instances:
-        - name: main
-          url: 	""
-          token:
-          username:

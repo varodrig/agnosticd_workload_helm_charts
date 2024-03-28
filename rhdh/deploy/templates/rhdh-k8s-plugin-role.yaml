@@ -15,6 +15,7 @@ rules:
       - configmaps
       - limitranges
       - pods/log
+      - resourcequotas
   - verbs:
       - get
       - watch
@@ -66,6 +67,17 @@ rules:
     apiGroups:
       - tekton.dev
     resources:
-      - pipelineruns
-      - pipelines
+      - tasks
       - taskruns
+      - pipelines
+      - pipelineruns
+      - runs
+  - verbs:
+      - get
+      - list
+      - watch
+    apiGroups:
+      - ''
+      - route.openshift.io
+    resources:
+      - routes
