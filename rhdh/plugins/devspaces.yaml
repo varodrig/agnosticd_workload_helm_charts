@@ -4,6 +4,7 @@ metadata:
   name: devspaces
   annotations:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+    che.eclipse.org/checluster-defaults-cleanup: '{"spec.components.pluginRegistry.openVSXURL":"true"}'
 spec:
   devEnvironments:
     defaultEditor: che-incubator/che-code/insiders
@@ -25,7 +26,8 @@ spec:
       spec: {}
     metrics:
       enable: true
-    pluginRegistry: {}
+    pluginRegistry:
+      openVSXURL: 'https://open-vsx.org'
   containerRegistry: {}
   networking:
     auth:
