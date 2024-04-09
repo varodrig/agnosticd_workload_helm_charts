@@ -12,6 +12,8 @@ spec:
       template: <username>-devspaces
     secondsOfInactivityBeforeIdling: -1
     secondsOfRunBeforeIdling: -1
+    containerBuildConfiguration:
+      openShiftSecurityContextConstraint: nested-podman-scc
     storage:
       pvcStrategy: per-user
   components:
