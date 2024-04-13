@@ -187,7 +187,7 @@ upstream:
           connection:
             password: ""
             user: ""
-            host: "developer-hub-postgresql"
+            host: "janus-backstage-postgresql"
             port: ""
         reading:
           allow:
