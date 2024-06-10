@@ -40,9 +40,9 @@ tackleInstance:
   keycloakDatabaseDataVolumeSize: 1Gi
   mavenDataVolumeSize: 10Gi
   pathfinderDatabaseDataVolumeSize: 1Gi
-  rwx_supported: true
+  rwxSupported: true
   rwoStorageClass: ocs-storagecluster-ceph-rbd
-  rwxStorageClass: ocs-storagecluster-cephfs  
+  rwxStorageClass: ocs-storagecluster-cephfs
 
 # Catalogsource Settings
 # Use a catalog source image snapshot
