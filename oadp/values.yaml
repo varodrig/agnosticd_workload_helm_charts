@@ -17,6 +17,7 @@ operatorChannel: stable-1.4
 # Settings for the DataProtectionApplication instance
 dpaInstance:
   deploy: false
+  # Storage can be 'ocs' or 'minio'. For minio the minio section needs to be populated
   storage: minio
   minio:
     serviceProtocol: http
