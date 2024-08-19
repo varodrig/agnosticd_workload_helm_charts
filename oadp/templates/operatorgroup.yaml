@@ -1,0 +1,12 @@
+{{- if .Values.deployOperator -}}
+---
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name: oadp
+  labels:
+    {{- include "oadp.labels" . | nindent 4 }}
+spec:
+  targetNamespaces:
+  - {{ .Release.Namespace }}
+{{- end -}}

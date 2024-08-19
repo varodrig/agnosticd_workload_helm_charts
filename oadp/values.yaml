@@ -1,0 +1,37 @@
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+nameOverride: ""
+fullnameOverride: ""
+
+namespacePermissions:
+  # Which OpenShift user gets permissions for the namespace
+  user: kubeadmin
+  # Which role to grant the user on the namespace
+  role: admin
+
+# Deploy OADP Operator
+deployOperator: true
+operatorChannel: stable-1.4
+
+# Settings for the DataProtectionApplication instance
+dpaInstance:
+  deploy: false
+  storage: minio
+  minio:
+    serviceProtocol: http
+    serviceName: minio
+    serviceNamespace: minio
+    servicePort: 9000
+    user: minio
+    password: ""
+    storageBucketName: bucket
+
+# Catalogsource Settings
+# Use a catalog source image snapshot
+useCatalogSnapshot: false
+catalogSource:
+  name: redhat-operators-snapshot-oadp
+  namespace: openshift-adp
+  image: quay.io/gpte-devops-automation/olm_snapshot_redhat_catalog
+  tag: v4.16_2024_08_19
