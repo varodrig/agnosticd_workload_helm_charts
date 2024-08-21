@@ -20,8 +20,13 @@ spec:
   - velero:
       config:
         profile: default
+{{- if eq .Values.dpaInstance.storage "minio" }}
         region: minio
         s3Url: {{ .Values.dpaInstance.minio.serviceProtocol }}://{{ .Values.dpaInstance.minio.serviceName }}.{{ .Values.dpaInstance.minio.serviceNamespace }}.svc:{{ .Values.dpaInstance.minio.servicePort}}
+{{- else }}
+        region: localstorage
+        s3Url: to_be_set_by_job
+{{- end }}
         s3ForcePathStyle: "true"
       provider: aws
       credential:
@@ -29,6 +34,10 @@ spec:
         key: cloud
       default: true
       objectStorage:
+{{- if eq .Values.dpaInstance.storage "minio" }}
         bucket: {{ .Values.dpaInstance.minio.storageBucketName }}
+{{- else }}
+        bucket: to_be_set_by_job
+{{- end }}
         prefix: velero
 {{- end -}}

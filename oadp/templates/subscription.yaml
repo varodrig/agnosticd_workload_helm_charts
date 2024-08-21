@@ -1,4 +1,4 @@
-{{- if .Values.deployOperator }}
+{{- if .Values.deployOperator -}}
 ---
 apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
@@ -17,4 +17,4 @@ spec:
   source: redhat-operators
   sourceNamespace: openshift-marketplace
 {{- end }}
-{{- end }}
+{{- end -}}

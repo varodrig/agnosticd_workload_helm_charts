@@ -1,11 +1,10 @@
-{{- if eq .Values.dpaInstance.storage "ocs" }}
+{{- if eq .Values.dpaInstance.storage "ocs" -}}
 ---
 apiVersion: objectbucket.io/v1alpha1
 kind: ObjectBucketClaim
 metadata:
   name: obc-backups
-  namespace: openshift-storage
 spec:
   storageClassName: openshift-storage.noobaa.io
   generateBucketName: backups
-{{- end }}
+{{- end -}}
