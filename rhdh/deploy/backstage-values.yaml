@@ -60,8 +60,6 @@ upstream:
       registry: ""
       repository: ""
       tag: ""
-      pullSecrets:
-      - mad-developer-hub-pull-secret
     extraEnvVars:
       - name: BACKEND_SECRET
         valueFrom:
